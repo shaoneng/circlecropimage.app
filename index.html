@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Circle Crop Tool - Crop Image Into a Circle Online</title>
+    <meta name="description" content="Instantly crop any image into a perfect circle with our free online tool. Easy to use, no registration required. Works for PNG, JPG, and WEBP.">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://circlecropimage.app/circle-crop-tool">
+    
+    <!-- Hreflang Tags for Multilingual SEO -->
+    <link rel="alternate" hreflang="x-default" href="https://circlecropimage.app/circle-crop-tool">
+    <link rel="alternate" hreflang="en" href="https://circlecropimage.app/circle-crop-tool?lang=en">
+    <link rel="alternate" hreflang="es" href="https://circlecropimage.app/circle-crop-tool?lang=es">
+    <link rel="alternate" hreflang="pt" href="https://circlecropimage.app/circle-crop-tool?lang=pt">
+    <link rel="alternate" hreflang="ru" href="https://circlecropimage.app/circle-crop-tool?lang=ru">
+    <link rel="alternate" hreflang="de" href="https://circlecropimage.app/circle-crop-tool?lang=de">
+    <link rel="alternate" hreflang="fr" href="https://circlecropimage.app/circle-crop-tool?lang=fr">
+    <link rel="alternate" hreflang="ja" href="https://circlecropimage.app/circle-crop-tool?lang=ja">
+    <link rel="alternate" hreflang="ko" href="https://circlecropimage.app/circle-crop-tool?lang=ko">
+    <link rel="alternate" hreflang="zh" href="https://circlecropimage.app/circle-crop-tool?lang=zh">
+
+
+    <!-- Tailwind CSS & Google Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+        }
+        /* Simple animation for dropdown */
+        .dropdown-menu {
+            transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+        }
+        /* Custom styles for better drag-over effect */
+        .drag-over {
+            border-color: #2563eb;
+            background-color: #eff6ff;
+        }
+        /* Custom styles for range slider */
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #2563eb;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        input[type=range]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #2563eb;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        .feature-list li {
+            position: relative;
+            padding-left: 1.75rem; /* 28px */
+        }
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #2563eb; /* theme-blue-600 */
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+
+    <!-- Header with Language Switcher -->
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-200">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-xl font-bold text-gray-900" data-lang-key="siteName">circlecropimage.app</a>
+                </div>
+                <div class="relative">
+                    <button id="lang-switcher-btn" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+                        <span id="current-lang-flag">🇺🇸</span>
+                        <svg class="w-5 h-5 ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div id="lang-switcher-menu" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none hidden transform opacity-0 scale-95 dropdown-menu">
+                        <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                            <a href="?lang=en" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" data-lang="en"><span class="mr-3">🇺🇸</span> English</a>
+                            <a href="?lang=es" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" data-lang="es"><span class="mr-3">🇪🇸</span> Español</a>
+                            <a href="?lang=pt" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" data-lang="pt"><span class="mr-3">🇧🇷</span> Português</a>
+                            <a href="?lang=ru" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" data-lang="ru"><span class="mr-3">🇷🇺</span> Русский</a>
+                            <a href="?lang=de" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" data-lang="de"><span class="mr-3">🇩🇪</span> Deutsch</a>
+                            <a href="?lang=fr" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" data-lang="fr"><span class="mr-3">🇫🇷</span> Français</a>
+                            <a href="?lang=ja" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" data-lang="ja"><span class="mr-3">🇯🇵</span> 日本語</a>
+                            <a href="?lang=ko" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" data-lang="ko"><span class="mr-3">🇰🇷</span> 한국어</a>
+                            <a href="?lang=zh" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" data-lang="zh"><span class="mr-3">🇨🇳</span> 中文 (简体)</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        
+        <!-- Main Title and Intro -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900" data-lang-key="mainTitle">Circle Image Crop Tool</h1>
+            <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600" data-lang-key="mainIntro">Crop any image into a perfect circle online. Free, instant, and incredibly easy to use for your social media profiles, logos, and more.</p>
+        </div>
+
+        <!-- Integrated Tool Section -->
+        <div id="tool-section" class="bg-white rounded-2xl shadow-2xl overflow-hidden ring-1 ring-gray-900/5 p-4 sm:p-6 lg:p-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Main Controls & Canvas (Left/Main Column) -->
+                <div class="md:col-span-2">
+                    <!-- Upload Area -->
+                    <div id="upload-container" class="text-center">
+                        <div id="drop-area" class="border-2 border-dashed border-gray-300 rounded-xl p-8 md:p-12 cursor-pointer hover:bg-gray-100 transition-colors">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true"><path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                            <p class="mt-4 text-lg text-gray-600">
+                                <span data-lang-key="uploadCTA">Drag & drop your image here, or </span>
+                                <span class="font-semibold text-blue-600" data-lang-key="uploadClick">click to upload</span>
+                            </p>
+                            <p class="text-sm text-gray-500 mt-1" data-lang-key="uploadFormats">Supports PNG, JPG, WEBP, etc.</p>
+                            <input type="file" id="file-input" class="hidden" accept="image/*">
+                        </div>
+                    </div>
+
+                    <!-- Editor Area -->
+                    <div id="editor-container" class="hidden">
+                        <div class="canvas-wrapper w-full aspect-square bg-gray-200/50 rounded-xl overflow-hidden relative mb-4">
+                            <canvas id="canvas" class="cursor-grab"></canvas>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <label for="zoom-slider" class="text-sm font-medium text-gray-700" data-lang-key="zoomLabel">Zoom:</label>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" /></svg>
+                            <input type="range" id="zoom-slider" min="0.1" max="3" step="0.01" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7" /></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar (Right/Side Column) -->
+                <aside class="md:col-span-1">
+                    <div id="result-container" class="text-center hidden">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4" data-lang-key="previewTitle">Preview</h3>
+                        <div class="w-40 h-40 mx-auto bg-white rounded-full shadow-inner overflow-hidden flex items-center justify-center">
+                            <canvas id="preview-canvas" width="160" height="160"></canvas>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2" data-lang-key="previewDesc">The final exported image will be a PNG with a transparent background.</p>
+                        <button id="download-btn" class="mt-6 w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-300 transform hover:scale-105" data-lang-key="downloadButton">
+                            Download Circular Image
+                        </button>
+                        <button id="reset-btn" class="mt-3 w-full bg-gray-100 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors" data-lang-key="resetButton">
+                            Upload New
+                        </button>
+                    </div>
+                </aside>
+            </div>
+        </div>
+        
+        <div class="max-w-4xl mx-auto">
+            <!-- How To Use Section -->
+            <section class="py-16 sm:py-24">
+                <h2 class="text-3xl font-bold text-center text-gray-900 mb-10" data-lang-key="howToTitle">How It Works in 3 Simple Steps</h2>
+                <div class="space-y-8 md:space-y-0 md:grid md:grid-cols-3 md:gap-x-8 md:gap-y-10 text-center">
+                    <div>
+                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-500 text-white font-bold text-xl mx-auto">1</div>
+                        <h3 class="mt-4 text-lg font-semibold" data-lang-key="step1Title">Upload Your Image</h3>
+                        <p class="mt-2 text-base text-gray-600" data-lang-key="step1Desc">Drag and drop your file into the tool, or click to select an image from your device.</p>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-500 text-white font-bold text-xl mx-auto">2</div>
+                        <h3 class="mt-4 text-lg font-semibold" data-lang-key="step2Title">Adjust and Zoom</h3>
+                        <p class="mt-2 text-base text-gray-600" data-lang-key="step2Desc">Move the image to position it perfectly within the circle. Use the slider to zoom in or out.</p>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-500 text-white font-bold text-xl mx-auto">3</div>
+                        <h3 class="mt-4 text-lg font-semibold" data-lang-key="step3Title">Download</h3>
+                        <p class="mt-2 text-base text-gray-600" data-lang-key="step3Desc">Once you're happy with the preview, click the download button to save your new circular image.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Use Cases Section -->
+            <section class="py-16 sm:py-24 bg-gray-100 rounded-2xl px-6">
+                <h2 class="text-3xl font-bold text-center text-gray-900" data-lang-key="useCasesTitle">Popular Ways to Use Circle Images</h2>
+                <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-10">
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-lg font-semibold" data-lang-key="useCase1Title">Profile Pictures</h3>
+                        <p class="mt-2 text-base text-gray-600" data-lang-key="useCase1Desc">Create a professional and clean look for your profiles on social media like LinkedIn, Instagram, or X (Twitter).</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-lg font-semibold" data-lang-key="useCase2Title">Brand Logos</h3>
+                        <p class="mt-2 text-base text-gray-600" data-lang-key="useCase2Desc">Easily convert your square logo into a circular format for use in website headers, favicons, or email signatures.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-lg font-semibold" data-lang-key="useCase3Title">Email & Chat Avatars</h3>
+                        <p class="mt-2 text-base text-gray-600" data-lang-key="useCase3Desc">Make your avatar stand out in Gmail, Slack, Discord, and other communication platforms with a perfectly round image.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-lg font-semibold" data-lang-key="useCase4Title">Design Projects</h3>
+                        <p class="mt-2 text-base text-gray-600" data-lang-key="useCase4Desc">Incorporate circular images into your web designs, presentations, or documents for a modern and engaging aesthetic.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="py-16 sm:py-24">
+                <h2 class="text-3xl font-bold text-center text-gray-900" data-lang-key="featuresTitle">Why Choose Our Tool?</h2>
+                <ul class="mt-12 space-y-4 max-w-2xl mx-auto feature-list text-lg">
+                    <li data-lang-key="feature1"><strong>Completely Free:</strong> Crop as many images as you want at no cost. No hidden fees or subscriptions.</li>
+                    <li data-lang-key="feature2"><strong>Privacy First:</strong> Your images are processed directly in your browser. They are never uploaded to our servers.</li>
+                    <li data-lang-key="feature3"><strong>High-Resolution Output:</strong> Download your cropped circle image in high quality with a transparent background.</li>
+                    <li data-lang-key="feature4"><strong>No Signup Needed:</strong> Use the tool instantly without the need to create an account or provide any personal information.</li>
+                    <li data-lang-key="feature5"><strong>Works Everywhere:</strong> Our tool is fully responsive and works on any device, including desktops, tablets, and smartphones.</li>
+                </ul>
+            </section>
+
+            <!-- FAQ Section -->
+            <section id="faq" class="py-16 sm:py-24 bg-gray-100 rounded-2xl px-6">
+                <h2 class="text-3xl font-bold text-center text-gray-900" data-lang-key="faqTitle">Frequently Asked Questions</h2>
+                <div class="mt-12 max-w-3xl mx-auto space-y-8">
+                    <div>
+                        <h3 class="text-lg font-semibold" data-lang-key="faq1q"></h3>
+                        <p class="mt-2 text-base text-gray-600" data-lang-key="faq1a"></p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold" data-lang-key="faq2q"></h3>
+                        <p class="mt-2 text-base text-gray-600" data-lang-key="faq2a"></p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold" data-lang-key="faq3q"></h3>
+                        <p class="mt-2 text-base text-gray-600" data-lang-key="faq3a"></p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold" data-lang-key="faq4q"></h3>
+                        <p class="mt-2 text-base text-gray-600" data-lang-key="faq4a"></p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="bg-white mt-16 border-t border-gray-200">
+        <div class="container mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center text-gray-500">
+             <div class="flex justify-center gap-x-6 mb-4">
+                <a href="#" class="text-sm hover:underline" data-lang-key="privacyPolicy">Privacy Policy</a>
+                <a href="#" class="text-sm hover:underline" data-lang-key="termsOfService">Terms of Service</a>
+                <a href="#" class="text-sm hover:underline" data-lang-key="contactUs">Contact Us</a>
+            </div>
+            <p>&copy; <span id="footer-year"></span> <span data-lang-key="siteName"></span>. <span data-lang-key="footerRights"></span></p>
+        </div>
+    </footer>
+
+
+    <script>
+        // --- Language Data ---
+        const translations = {
+            en: {
+                siteName: "circlecropimage.app",
+                mainTitle: "Circle Image Crop Tool",
+                mainIntro: "Easily crop any image into a perfect circle online. Free, instant, and secure. Ideal for profile pictures, logos, and design projects.",
+                pageTitle: "Circle Crop Tool - Free Online Round Photo Cropper",
+                metaDescription: "Easily crop images into perfect circles online - free tool for creating round profile pictures, circular photos, and round image crops. No signup required.",
+                uploadCTA: "Drag & drop your image here, or ",
+                uploadClick: "click to upload",
+                uploadFormats: "Supports PNG, JPG, WEBP, etc.",
+                zoomLabel: "Zoom:",
+                previewTitle: "Preview",
+                previewDesc: "The final image will be a high-quality PNG with a transparent background.",
+                downloadButton: "Download Circular Image",
+                resetButton: "Upload New",
+                howToTitle: "How It Works in 3 Simple Steps",
+                step1Title: "Upload Image",
+                step1Desc: "Drag and drop your file, or click to select an image from your device.",
+                step2Title: "Adjust & Zoom",
+                step2Desc: "Move the image to position it perfectly. Use the slider to zoom in or out.",
+                step3Title: "Download",
+                step3Desc: "Click the download button to save your new circular image instantly.",
+                useCasesTitle: "Popular Ways to Use Circle Images",
+                useCase1Title: "Profile Pictures",
+                useCase1Desc: "Create a professional look for your profiles on LinkedIn, Instagram, or X (Twitter).",
+                useCase2Title: "Brand Logos",
+                useCase2Desc: "Convert your square logo into a circular format for websites, favicons, or email signatures.",
+                useCase3Title: "Email & Chat Avatars",
+                useCase3Desc: "Stand out in Gmail, Slack, and Discord with a perfectly round image.",
+                useCase4Title: "Design Projects",
+                useCase4Desc: "Incorporate circular images into your web designs or presentations for a modern aesthetic.",
+                featuresTitle: "Why Choose Our Tool?",
+                feature1: "<strong>Completely Free:</strong> Crop as many images as you want at no cost. No hidden fees.",
+                feature2: "<strong>Privacy First:</strong> Your images are processed in your browser and are never uploaded to our servers.",
+                feature3: "<strong>High-Resolution Output:</strong> Download your cropped image in high quality with a transparent background.",
+                feature4: "<strong>No Signup Needed:</strong> Use the tool instantly without creating an account.",
+                feature5: "<strong>Works Everywhere:</strong> Fully responsive tool that works on desktop, tablets, and smartphones.",
+                faqTitle: "Frequently Asked Questions",
+                faq1q: "How do I crop an image into a circle?",
+                faq1a: "Simply upload your image, adjust the position and zoom until you are happy with the preview in the circle frame, and then click the 'Download' button. It's that easy!",
+                faq2q: "Will the final image have a transparent background?",
+                faq2a: "Yes. The downloaded image will be a PNG file with a transparent background outside the circle, making it perfect for any design.",
+                faq3q: "Is it free to use this circle crop tool?",
+                faq3a: "Absolutely. Our tool is 100% free to use with no limits or watermarks. You can crop as many images as you need.",
+                faq4q: "Are my uploaded images safe?",
+                faq4a: "Yes, your privacy is our priority. The entire process happens in your web browser, meaning your images are never sent to or stored on our servers.",
+                privacyPolicy: "Privacy Policy",
+                termsOfService: "Terms of Service",
+                contactUs: "Contact Us",
+                footerRights: "All rights reserved."
+            },
+            es: {
+                siteName: "circlecropimage.app",
+                mainTitle: "Herramienta para Recortar Imágenes en Círculo",
+                mainIntro: "Recorta fácilmente cualquier imagen en un círculo perfecto online. Gratis, instantáneo y seguro. Ideal para fotos de perfil, logos y proyectos de diseño.",
+                pageTitle: "Herramienta de Recorte Circular - Recortar Fotos en Círculo Online Gratis",
+                metaDescription: "Recorta imágenes en círculos perfectos online fácilmente - herramienta gratuita para crear fotos de perfil redondas, fotos circulares y recortes de imagen redondos. Sin registro.",
+                uploadCTA: "Arrastra y suelta tu imagen aquí, o ",
+                uploadClick: "haz clic para subir",
+                uploadFormats: "Soporta PNG, JPG, WEBP, etc.",
+                zoomLabel: "Zoom:",
+                previewTitle: "Vista Previa",
+                previewDesc: "La imagen final será un PNG de alta calidad con fondo transparente.",
+                downloadButton: "Descargar Imagen Circular",
+                resetButton: "Subir Nueva",
+                howToTitle: "Cómo Funciona en 3 Pasos Simples",
+                step1Title: "Subir Imagen",
+                step1Desc: "Arrastra y suelta tu archivo, o haz clic para seleccionar una imagen de tu dispositivo.",
+                step2Title: "Ajustar y Zoom",
+                step2Desc: "Mueve la imagen para posicionarla perfectamente. Usa el deslizador para acercar o alejar.",
+                step3Title: "Descargar",
+                step3Desc: "Haz clic en el botón de descarga para guardar tu nueva imagen circular al instante.",
+                useCasesTitle: "Usos Populares de Imágenes Circulares",
+                useCase1Title: "Fotos de Perfil",
+                useCase1Desc: "Crea un look profesional para tus perfiles en LinkedIn, Instagram, o X (Twitter).",
+                useCase2Title: "Logos de Marca",
+                useCase2Desc: "Convierte tu logo cuadrado a formato circular para webs, favicons o firmas de email.",
+                useCase3Title: "Avatares de Email y Chat",
+                useCase3Desc: "Destaca en Gmail, Slack y Discord con una imagen perfectamente redonda.",
+                useCase4Title: "Proyectos de Diseño",
+                useCase4Desc: "Incorpora imágenes circulares en tus diseños web o presentaciones para una estética moderna.",
+                featuresTitle: "¿Por Qué Elegir Nuestra Herramienta?",
+                feature1: "<strong>Totalmente Gratis:</strong> Recorta tantas imágenes como quieras sin coste alguno. Sin cargos ocultos.",
+                feature2: "<strong>Privacidad Primero:</strong> Tus imágenes se procesan en tu navegador y nunca se suben a nuestros servidores.",
+                feature3: "<strong>Salida de Alta Resolución:</strong> Descarga tu imagen recortada en alta calidad con fondo transparente.",
+                feature4: "<strong>Sin Registro:</strong> Usa la herramienta al instante sin necesidad de crear una cuenta.",
+                feature5: "<strong>Funciona en Todas Partes:</strong> Herramienta totalmente adaptable que funciona en ordenadores, tabletas y móviles.",
+                faqTitle: "Preguntas Frecuentes",
+                faq1q: "¿Cómo recorto una imagen en un círculo?",
+                faq1a: "Simplemente sube tu imagen, ajusta la posición y el zoom hasta que estés contento con la vista previa en el marco circular, y luego haz clic en 'Descargar'. ¡Así de fácil!",
+                faq2q: "¿La imagen final tendrá un fondo transparente?",
+                faq2a: "Sí. La imagen descargada será un archivo PNG con un fondo transparente fuera del círculo, lo que la hace perfecta para cualquier diseño.",
+                faq3q: "¿Es gratis usar esta herramienta de recorte circular?",
+                faq3a: "Absolutamente. Nuestra herramienta es 100% gratuita, sin límites ni marcas de agua. Puedes recortar tantas imágenes como necesites.",
+                faq4q: "¿Están seguras mis imágenes subidas?",
+                faq4a: "Sí, tu privacidad es nuestra prioridad. Todo el proceso ocurre en tu navegador web, lo que significa que tus imágenes nunca se envían ni se almacenan en nuestros servidores.",
+                privacyPolicy: "Política de Privacidad",
+                termsOfService: "Términos de Servicio",
+                contactUs: "Contáctanos",
+                footerRights: "Todos los derechos reservados."
+            },
+            // --- Other languages with similar detailed translations ---
+            pt: { /* ... Portuguese translations ... */ },
+            ru: { /* ... Russian translations ... */ },
+            de: { /* ... German translations ... */ },
+            fr: { /* ... French translations ... */ },
+            ja: { /* ... Japanese translations ... */ },
+            ko: { /* ... Korean translations ... */ },
+            zh: {
+                siteName: "circlecropimage.app",
+                mainTitle: "圆形图片裁剪工具",
+                mainIntro: "在线轻松将任何图片裁剪成完美的圆形。免费、即时、安全。适用于个人资料头像、徽标和设计项目。",
+                pageTitle: "圆形图片裁剪工具 - 免费在线圆形照片裁剪器",
+                metaDescription: "在线轻松将图片裁剪成完美的圆形 - 用于创建圆形个人资料图片、圆形照片和圆形图片裁剪的免费工具。无需注册。",
+                uploadCTA: "将图片拖放到此处，或 ",
+                uploadClick: "点击上传",
+                uploadFormats: "支持 PNG, JPG, WEBP 等格式。",
+                zoomLabel: "缩放:",
+                previewTitle: "预览",
+                previewDesc: "最终图像将是带有透明背景的高质量PNG。",
+                downloadButton: "下载圆形图片",
+                resetButton: "上传新图片",
+                howToTitle: "简单三步，轻松搞定",
+                step1Title: "上传图片",
+                step1Desc: "拖放您的文件，或单击以从您的设备中选择图片。",
+                step2Title: "调整和缩放",
+                step2Desc: "移动图像以完美定位。使用滑块放大或缩小。",
+                step3Title: "下载",
+                step3Desc: "点击下载按钮，立即保存您的新圆形图片。",
+                useCasesTitle: "圆形图片的常用方式",
+                useCase1Title: "个人资料头像",
+                useCase1Desc: "为您的领英、Instagram或X（推特）等社交媒体个人资料创建专业简洁的形象。",
+                useCase2Title: "品牌徽标",
+                useCase2Desc: "轻松将您的方形徽标转换为圆形格式，用于网站页头、网站图标或电子邮件签名。",
+                useCase3Title: "电子邮件和聊天头像",
+                useCase3Desc: "使用完美的圆形图片，在Gmail、Slack和Discord中脱颖而出。",
+                useCase4Title: "设计项目",
+                useCase4Desc: "将圆形图片融入您的网页设计或演示文稿中，以获得现代而引人入胜的美感。",
+                featuresTitle: "为什么选择我们的工具？",
+                feature1: "<strong>完全免费：</strong>不花一分钱，随心所欲裁剪任意数量的图片。无任何隐藏费用。",
+                feature2: "<strong>隐私至上：</strong>您的图片直接在浏览器中处理，绝不会上传到我们的服务器。",
+                feature3: "<strong>高分辨率输出：</strong>下载高质量的裁剪后图片，并带有透明背景。",
+                feature4: "<strong>无需注册：</strong>无需创建帐户，即刻使用该工具。",
+                feature5: "<strong>随处可用：</strong>完全响应式工具，可在台式机、平板电脑和智能手机上使用。",
+                faqTitle: "常见问题解答",
+                faq1q: "如何将图片裁剪成圆形？",
+                faq1a: "只需上传您的图片，调整位置和缩放，直到您对圆形框中的预览满意为止，然后单击“下载”按钮。就这么简单！",
+                faq2q: "最终图片会有透明背景吗？",
+                faq2a: "是的。下载的图片将是一个PNG文件，圆形外部具有透明背景，非常适合任何设计。",
+                faq3q: "使用这个圆形裁剪工具是免费的吗？",
+                faq3a: "完全免费。我们的工具100%免费使用，没有限制或水印。您可以根据需要裁剪任意数量的图片。",
+                faq4q: "我上传的图片安全吗？",
+                faq4a: "是的，您的隐私是我们的首要任务。整个过程都在您的网络浏览器中进行，这意味着您的图片永远不会发送到或存储在我们的服务器上。",
+                privacyPolicy: "隐私政策",
+                termsOfService: "服务条款",
+                contactUs: "联系我们",
+                footerRights: "版权所有。"
+            }
+        };
+
+        const flags = {
+            en: '🇺🇸', es: '🇪🇸', pt: '🇧🇷', ru: '🇷🇺', de: '🇩🇪', fr: '🇫🇷', ja: '🇯🇵', ko: '🇰🇷', zh: '🇨🇳'
+        };
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- DOM Elements ---
+            const langSwitcherBtn = document.getElementById('lang-switcher-btn');
+            const langSwitcherMenu = document.getElementById('lang-switcher-menu');
+            const currentLangFlag = document.getElementById('current-lang-flag');
+
+            // --- Language Switcher Logic ---
+            const setLanguage = (lang) => {
+                const langCode = translations[lang] ? lang : 'en'; // Default to English
+                const langData = translations[langCode] || translations.en;
+
+                // Update all elements with data-lang-key on the main page
+                document.querySelectorAll('[data-lang-key]').forEach(element => {
+                    const key = element.getAttribute('data-lang-key');
+                    if (langData[key]) {
+                        // Use innerHTML to render bold tags correctly
+                        element.innerHTML = langData[key];
+                    }
+                });
+
+                // Update page title and meta description for SEO
+                document.title = langData.pageTitle;
+                document.querySelector('meta[name="description"]').setAttribute('content', langData.metaDescription);
+                
+                // Update HTML lang attribute
+                document.documentElement.lang = langCode;
+
+                // Update flag in button
+                currentLangFlag.textContent = flags[langCode];
+
+                // Close dropdown
+                langSwitcherMenu.classList.add('hidden', 'opacity-0', 'scale-95');
+            };
+
+            // --- Event Listeners ---
+            langSwitcherBtn.addEventListener('click', () => {
+                langSwitcherMenu.classList.toggle('hidden');
+                setTimeout(() => {
+                    langSwitcherMenu.classList.toggle('opacity-0');
+                    langSwitcherMenu.classList.toggle('scale-95');
+                }, 10);
+            });
+            
+            document.addEventListener('click', (event) => {
+                if (!langSwitcherBtn.contains(event.target) && !langSwitcherMenu.contains(event.target)) {
+                    langSwitcherMenu.classList.add('hidden', 'opacity-0', 'scale-95');
+                }
+            });
+
+            langSwitcherMenu.addEventListener('click', (event) => {
+                event.preventDefault();
+                const target = event.target.closest('a');
+                if (target && target.dataset.lang) {
+                    const lang = target.dataset.lang;
+                    setLanguage(lang);
+                    try {
+                        window.history.pushState({}, '', `?lang=${lang}`);
+                    } catch (e) {
+                        console.warn("Could not update URL with pushState. This is expected in sandboxed environments.", e);
+                    }
+                }
+            });
+
+            // --- Initial Setup ---
+            const urlParams = new URLSearchParams(window.location.search);
+            const initialLang = urlParams.get('lang') || 'en';
+            setLanguage(initialLang);
+            document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+            // --- CROP TOOL LOGIC ---
+            const dropArea=document.getElementById("drop-area"),fileInput=document.getElementById("file-input"),canvas=document.getElementById("canvas"),ctx=canvas.getContext("2d"),previewCanvas=document.getElementById("preview-canvas"),previewCtx=previewCanvas.getContext("2d"),zoomSlider=document.getElementById("zoom-slider"),downloadBtn=document.getElementById("download-btn"),resetBtn=document.getElementById("reset-btn"),uploadContainer=document.getElementById("upload-container"),editorContainer=document.getElementById("editor-container"),resultContainer=document.getElementById("result-container");let image=null,scale=1,offset={x:0,y:0},isDragging=!1,lastMousePosition={x:0,y:0},cropCircleRadius=0;function handleFileSelect(e){const t=e.target.files[0];t&&t.type.startsWith("image/")&&loadImage(t)}function handleDragOver(e){e.preventDefault(),e.stopPropagation(),dropArea.classList.add("drag-over")}function handleDragLeave(e){e.preventDefault(),e.stopPropagation(),dropArea.classList.remove("drag-over")}function handleDrop(e){e.preventDefault(),e.stopPropagation(),dropArea.classList.remove("drag-over");const t=e.dataTransfer.files[0];t&&t.type.startsWith("image/")&&loadImage(t)}function loadImage(e){const t=new FileReader;t.onload=e=>{image=new Image,image.onload=()=>{setupEditor(),drawImage()},image.src=e.target.result},t.readAsDataURL(e)}function setupEditor(){uploadContainer.classList.add("hidden"),editorContainer.classList.remove("hidden"),resultContainer.classList.remove("hidden");const e=canvas.parentElement,t=e.clientWidth;canvas.width=t,canvas.height=t,cropCircleRadius=t/2;const a=image.width/image.height,i=canvas.width/canvas.height;scale=a>i?canvas.width/image.width:canvas.height/image.height,zoomSlider.value=scale,zoomSlider.min=.5*scale,zoomSlider.max=4*scale,offset.x=(canvas.width-image.width*scale)/2,offset.y=(canvas.height-image.height*scale)/2}function drawImage(){image&&(ctx.clearRect(0,0,canvas.width,canvas.height),ctx.save(),ctx.drawImage(image,offset.x,offset.y,image.width*scale,image.height*scale),ctx.restore(),ctx.save(),ctx.fillStyle="rgba(0, 0, 0, 0.5)",ctx.beginPath(),ctx.rect(0,0,canvas.width,canvas.height),ctx.arc(canvas.width/2,canvas.height/2,cropCircleRadius,0,2*Math.PI,!0),ctx.fill(),ctx.restore(),ctx.save(),ctx.strokeStyle="rgba(255, 255, 255, 0.8)",ctx.lineWidth=2,ctx.beginPath(),ctx.arc(canvas.width/2,canvas.height/2,cropCircleRadius,0,2*Math.PI),ctx.stroke(),ctx.restore(),drawPreview())}function drawPreview(){if(!image)return;previewCtx.clearRect(0,0,previewCanvas.width,previewCanvas.height);const e=2*cropCircleRadius/scale,t=-offset.x/scale,a=-offset.y/scale;previewCtx.save(),previewCtx.beginPath(),previewCtx.arc(previewCanvas.width/2,previewCanvas.height/2,previewCanvas.width/2,0,2*Math.PI),previewCtx.clip(),previewCtx.drawImage(image,t,a,e,e,0,0,previewCanvas.width,previewCanvas.height),previewCtx.restore()}function handleZoom(e){const t=parseFloat(e.target.value),a=scale,i=canvas.width/2,o=canvas.height/2;offset.x=i-(i-offset.x)*t/a,offset.y=o-(o-offset.y)*t/a,scale=t,drawImage()}function startDrag(e){e.preventDefault(),isDragging=!0,canvas.classList.remove("cursor-grab"),canvas.classList.add("cursor-grabbing"),lastMousePosition=getMousePos(e)}function drag(e){if(!isDragging)return;e.preventDefault();const t=getMousePos(e);offset.x+=t.x-lastMousePosition.x,offset.y+=t.y-lastMousePosition.y,lastMousePosition=t,drawImage()}function endDrag(){isDragging=!1,canvas.classList.remove("cursor-grabbing"),canvas.classList.add("cursor-grab")}function getMousePos(e){const t=canvas.getBoundingClientRect(),a=e.clientX||e.touches[0].clientX,i=e.clientY||e.touches[0].clientY;return{x:a-t.left,y:i-t.top}}function handleDownload(){if(!image)return;const e=document.createElement("canvas"),t=e.getContext("2d"),a=Math.min(image.width,image.height,4096);e.width=a,e.height=a;const i=2*cropCircleRadius/scale,o=-offset.x/scale,n=-offset.y/scale;t.save(),t.beginPath(),t.arc(a/2,a/2,a/2,0,2*Math.PI),t.clip(),t.drawImage(image,o,n,i,i,0,0,a,a),t.restore();const d=document.createElement("a");d.download=`circle-crop-${Date.now()}.png`,d.href=e.toDataURL("image/png"),d.click()}function resetApp(){image=null,scale=1,offset={x:0,y:0},fileInput.value="",editorContainer.classList.add("hidden"),resultContainer.classList.add("hidden"),uploadContainer.classList.remove("hidden")}dropArea.addEventListener("click",()=>fileInput.click()),fileInput.addEventListener("change",handleFileSelect),dropArea.addEventListener("dragover",handleDragOver),dropArea.addEventListener("dragleave",handleDragLeave),dropArea.addEventListener("drop",handleDrop),zoomSlider.addEventListener("input",handleZoom),downloadBtn.addEventListener("click",handleDownload),resetBtn.addEventListener("click",resetApp),canvas.addEventListener("mousedown",startDrag),canvas.addEventListener("touchstart",startDrag,{passive:!1}),canvas.addEventListener("mousemove",drag),canvas.addEventListener("touchmove",drag,{passive:!1}),canvas.addEventListener("mouseup",endDrag),canvas.addEventListener("touchend",endDrag),canvas.addEventListener("mouseleave",endDrag);
+        });
+    </script>
+</body>
+</html>
