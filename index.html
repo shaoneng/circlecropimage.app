@@ -276,18 +276,6 @@
 
 
     <script>
-        const updateNavLinks = (langCode) => {
-    document.querySelectorAll('.nav-link').forEach(link => {
-        // 假设您的主页是 index.html
-        const originalHref = link.getAttribute('href') === '/' ? '/index.html' : link.getAttribute('href').split('?')[0];
-        link.setAttribute('href', `${originalHref}?lang=${langCode}`);
-    });
-};
-
-    const setLanguage = (lang) => {
-        const langCode = translations[lang] ? lang : 'en';
-        const langData = translations[langCode] || translations.en;
-    
         // --- Language Data ---
         const translations = {
             en: {
@@ -740,13 +728,44 @@
                 contactUs: "联系我们",
                 footerRights: "版权所有。"
             }
-             updateNavLinks(langCode);
-            }
         };
 
         const flags = {
             en: '🇺🇸', es: '🇪🇸', pt: '🇧🇷', ru: '🇷🇺', de: '🇩🇪', fr: '🇫🇷', ja: '🇯🇵', ko: '🇰🇷', zh: '🇨🇳'
         };
+        const updateNavLinks = (langCode) => {
+        document.querySelectorAll('.nav-link').forEach(link => {
+            const originalHref = link.getAttribute('href').split('?')[0];
+            // 确保主页链接正确
+            const cleanHref = (originalHref === '/' || originalHref === 'index.html') ? '/index.html' : originalHref;
+            link.setAttribute('href', `${cleanHref}?lang=${langCode}`);
+        });
+    };
+
+    const setLanguage = (lang) => {
+        const langCode = translations[lang] ? lang : 'en';
+        const langData = translations[langCode] || translations.en;
+
+        document.querySelectorAll('[data-lang-key]').forEach(element => {
+            const key = element.getAttribute('data-lang-key');
+            if (langData[key]) {
+                element.innerHTML = langData[key];
+            }
+        });
+
+        document.title = langData.pageTitle;
+        document.querySelector('meta[name="description"]').setAttribute('content', langData.metaDescription);
+        document.documentElement.lang = langCode;
+        
+        const currentLangFlag = document.getElementById('current-lang-flag');
+        if(currentLangFlag) currentLangFlag.textContent = flags[langCode];
+        
+        const langSwitcherMenu = document.getElementById('lang-switcher-menu');
+        if(langSwitcherMenu) langSwitcherMenu.classList.add('hidden', 'opacity-0', 'scale-95');
+
+        updateNavLinks(langCode);
+    };
+
         
         document.addEventListener('DOMContentLoaded', function() {
             // --- DOM Elements ---
