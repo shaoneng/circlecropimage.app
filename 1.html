@@ -1,0 +1,530 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小学语法趣味学习宝典 - 让孩子爱上学英语！</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap');
+
+        :root {
+            --primary-color: #2979FF;
+            --secondary-color: #FFC107;
+            --dark-color: #263238;
+            --light-color: #FFFFFF;
+            --gray-color: #F5F7FA;
+            --text-color: #546E7A;
+            --heading-font: 'Nunito', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.8;
+            background-color: var(--light-color);
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 960px;
+            margin: auto;
+            overflow: hidden;
+            padding: 2rem 1rem;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--heading-font);
+            font-weight: 900;
+            color: var(--dark-color);
+            line-height: 1.3;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 3rem auto;
+        }
+
+        /* --- Header / Hero Section --- */
+        .hero {
+            background: linear-gradient(45deg, var(--primary-color), #448AFF);
+            color: var(--light-color);
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: var(--light-color);
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        
+        .hero-visual {
+            margin-top: 3rem;
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 15px;
+            display: inline-block;
+        }
+        
+        .hero-visual img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        /* --- Pain Points Section --- */
+        .pain-points {
+            background-color: var(--gray-color);
+        }
+        
+        .pain-points-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .point-card {
+            background: var(--light-color);
+            padding: 2rem 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .point-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .point-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        /* --- Features Section --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+        }
+
+        .feature {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .feature:nth-child(even) .feature-text {
+            order: 2;
+        }
+
+        .feature-text h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-image img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        /* --- Content Directory Section --- */
+        .directory {
+            background-color: var(--gray-color);
+        }
+        
+        details {
+            background: var(--light-color);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        summary {
+            padding: 1.5rem;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--dark-color);
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        summary::after {
+            content: '＋';
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        details[open] summary::after {
+            transform: rotate(45deg);
+        }
+
+        .details-content {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+            border-top: 1px solid var(--gray-color);
+        }
+        
+        .details-content ul {
+            list-style-type: '✔ ';
+            padding-left: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem 1rem;
+        }
+
+        /* --- Testimonials Section --- */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: #FFF9E6;
+            border-left: 5px solid var(--secondary-color);
+            padding: 2rem;
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: '“';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            font-size: 5rem;
+            color: var(--secondary-color);
+            opacity: 0.3;
+        }
+
+        .testimonial-card p {
+            font-style: italic;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-card .author {
+            font-weight: 700;
+            color: var(--dark-color);
+            text-align: right;
+        }
+
+        /* --- Final CTA Section --- */
+        .final-cta {
+            background: var(--dark-color);
+            color: var(--light-color);
+            text-align: center;
+            border-radius: 20px;
+            padding: 3rem 2rem;
+        }
+        
+        .final-cta h2 {
+            color: var(--light-color);
+        }
+        
+        .final-cta .features-list {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .final-cta .features-list li {
+            font-weight: 700;
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            background-color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            h2 { font-size: 2rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .feature, .feature:nth-child(even) {
+                grid-template-columns: 1fr;
+            }
+            .feature:nth-child(even) .feature-text {
+                order: 0;
+            }
+            .details-content ul {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- ========= HERO SECTION ========= -->
+    <header class="hero">
+        <h1>告别枯燥语法，让孩子像看动画片一样爱上学英语！</h1>
+        <p>专为6-12岁小学生设计，165+节“会讲故事”的PDF语法宝典，覆盖小学全部考点。</p>
+        <a href="#final-cta" class="cta-button">立即解锁全套趣味语法</a>
+        <div class="hero-visual">
+            <img src="https://placehold.co/600x300/FFFFFF/2979FF?text=趣味语法PDF内容展示" alt="趣味语法资料内容展示">
+        </div>
+    </header>
+
+    <main>
+        <!-- ========= PAIN POINTS SECTION ========= -->
+        <section class="pain-points">
+            <div class="container">
+                <h2>您的孩子是否正在经历“语法劫”？</h2>
+                <p class="section-subtitle">90%的孩子学不好语法，不是因为笨，而是因为方法太枯燥！</p>
+                <div class="pain-points-grid">
+                    <div class="point-card">
+                        <div class="icon">😭</div>
+                        <h3>一提就头疼</h3>
+                        <p>一提语法就哭闹，完全不想学，视英语为“洪水猛兽”。</p>
+                    </div>
+                    <div class="point-card">
+                        <div class="icon">🤔</div>
+                        <h3>做题全靠蒙</h3>
+                        <p>am/is/are, do/does 凭感觉选，规则混淆，知识点模糊。</p>
+                    </div>
+                    <div class="point-card">
+                        <div class="icon">❌</div>
+                        <h3>背了不会用</h3>
+                        <p>背了无数语法规则，但一到实际做题和写作时就出错。</p>
+                    </div>
+                    <div class="point-card">
+                        <div class="icon">🤷‍♀️</div>
+                        <h3>家长讲不清</h3>
+                        <p>您用尽方法，也无法给孩子讲清一个抽象的语法知识点。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========= FEATURES SECTION ========= -->
+        <section class="container">
+            <h2 style="margin-top: 2rem;">我们如何让语法变好玩？</h2>
+            <p class="section-subtitle">我们把知识点，变成了孩子着迷的故事和游戏，彻底激发学习兴趣。</p>
+            
+            <div class="features-grid">
+                <!-- Feature 1 -->
+                <div class="feature">
+                    <div class="feature-text">
+                        <h3>亮点一：故事化教学</h3>
+                        <p>每个知识点都是一个独立故事，如“哪吒的时空大冒险(时态)”、“跟快递小哥Give学双宾语”，孩子在情境中理解，记得更牢，告别死记硬背。</p>
+                    </div>
+                    <div class="feature-image">
+                        <img src="https://placehold.co/400x300/448AFF/FFFFFF?text=故事化教学截图" alt="故事化教学">
+                    </div>
+                </div>
+                <!-- Feature 2 -->
+                <div class="feature">
+                    <div class="feature-text">
+                        <h3>亮点二：每集配有对话式音频</h3>
+                        <p>为你详细拆解每一个语法知识点。</p>
+                    </div>
+                    <div class="feature-image">
+                        <img src="https://placehold.co/400x300/FFC107/FFFFFF?text=配套对话式音频" alt="配套对话式音频">
+                    </div>
+                </div>
+                <!-- Feature 3 -->
+                <div class="feature">
+                    <div class="feature-text">
+                        <h3>亮点三：独家“魔法口诀”</h3>
+                        <p>将复杂规则提炼成朗朗上口的“小口诀”，如“假设世界真奇妙, were 放主语不乱跳!”，让孩子轻松记下考点，记忆效果翻倍。</p>
+                    </div>
+                    <div class="feature-image">
+                        <img src="https://placehold.co/400x300/4CAF50/FFFFFF?text=魔法口诀截图" alt="魔法口诀">
+                    </div>
+                </div>
+                 <!-- Feature 4 -->
+                <div class="feature">
+                    <div class="feature-text">
+                        <h3>亮点四：即学即练闭环</h3>
+                        <p>每个专题后都附有“趣味练习题”和“开心练习题”，帮助孩子及时巩固，家长可以轻松检验学习效果，形成高效学习闭环。</p>
+                    </div>
+                    <div class="feature-image">
+                        <img src="https://placehold.co/400x300/F44336/FFFFFF?text=趣味练习题截图" alt="趣味练习题">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========= CONTENT DIRECTORY SECTION ========= -->
+        <section class="directory">
+            <div class="container">
+                <h2>165+ 专题，构建孩子完整的语法知识树</h2>
+                <p class="section-subtitle">体系完整科学，从入门到精通，无缝衔接课堂，轻松备战小升初。</p>
+                
+                <details>
+                    <summary>【基础入门篇】打好地基</summary>
+                    <div class="details-content">
+                        <ul>
+                            <li>1. 助动词do和does</li>
+                            <li>2. 冠词a an the的用法</li>
+                            <li>6. 人称代词</li>
+                            <li>9. 主语 / 13. 谓语 / 14. 宾语</li>
+                            <li>17. 句子的基本结构</li>
+                            <li>39. 名词的单数和复数</li>
+                            <li>41. Be动词</li>
+                            <li>51. Who的冒险之旅</li>
+                            <li>81. “there is”和“there are”</li>
+                            <li>...等等</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>【核心进阶篇】能力跃迁</summary>
+                    <div class="details-content">
+                        <ul>
+                            <li>26. 一般现在时</li>
+                            <li>27. 一般过去时</li>
+                            <li>28. 一般将来时</li>
+                            <li>54. 现在完成时I have done</li>
+                            <li>65. 被动语态is done 和 was done</li>
+                            <li>72. Must Mustn't Don't Need to</li>
+                            <li>96. 动词不定时与-ing形式</li>
+                            <li>116. 神奇的比较魔法镜not as...as...</li>
+                            <li>121. 连接词交通队</li>
+                            <li>...等等</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>【难点攻克篇】冲刺高分</summary>
+                    <div class="details-content">
+                        <ul>
+                            <li>142. 限制性 vs. 非限制性从句</li>
+                            <li>151. 虚拟语气</li>
+                            <li>152. wish用法</li>
+                            <li>156. 英语条件句四种区别</li>
+                            <li>157. 零零条件句</li>
+                            <li>158. 第一条件句</li>
+                            <li>159. 第二条件句</li>
+                            <li>160. 第三条件句</li>
+                            <li>135. 哪吒的时空大冒险</li>
+                            <li>...等等</li>
+                        </ul>
+                    </div>
+                </details>
+            </div>
+        </section>
+        
+        <!-- ========= TESTIMONIALS SECTION ========= -->
+        <section class="container">
+            <h2>看看他们怎么说</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p>太惊喜了！以前逼着我儿子学语法，他总是不耐烦。现在他会主动让我打印‘那个哪吒的故事’，做完练习还特有成就感！</p>
+                    <div class="author">- 二年级学生家长 王女士</div>
+                </div>
+                <div class="testimonial-card">
+                    <p>相见恨晚！内容太全了，正好用来做小升初复习。条理清晰，难点突出，比我买的任何一本语法书都管用。</p>
+                    <div class="author">- 五年级学生家长 李先生</div>
+                </div>
+                <div class="testimonial-card">
+                    <p>已经把这套资料用作我的课堂补充材料了。孩子们反馈特别好，尤其是‘魔法口诀’，对他们记忆帮助很大。强烈推荐！</p>
+                    <div class="author">- 小学英语教师 张老师</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========= FINAL CTA SECTION ========= -->
+        <section class="container" id="final-cta">
+            <div class="final-cta">
+                <h2>一套资料，解决孩子6年语法难题！</h2>
+                <ul class="features-list">
+                    <li>✔ 165+ 超全高清PDF文档</li>
+                    <li>✔ 覆盖小学阶段所有核心语法点</li>
+                    <li>✔ 持续更新的趣味学习内容</li>
+                </ul>
+                <a href="#" class="cta-button">立即拥有这套“会讲故事的语法书”</a>
+            </div>
+        </section>
+        
+        <!-- ========= FAQ SECTION ========= -->
+        <section class="container">
+             <h2>常见问题</h2>
+             <details>
+                <summary>资料是什么格式？如何使用？</summary>
+                <div class="details-content">
+                    <p>全为高清PDF格式，可在电脑、平板、手机上阅读，也支持打印出来给孩子学习，非常方便。</p>
+                </div>
+            </details>
+            <details>
+                <summary>适合多大的孩子？</summary>
+                <div class="details-content">
+                    <p>完美覆盖6-12岁（小学一至六年级）所有学生。低年级可用于兴趣启蒙，高年级可用于系统学习和总复习。</p>
+                </div>
+            </details>
+            <details>
+                <summary>购买后是永久的吗？</summary>
+                <div class="details-content">
+                    <p>是的，一次购买，永久使用，并享受后续可能有的免费更新。</p>
+                </div>
+            </details>
+        </section>
+
+    </main>
+
+    <!-- ========= FOOTER ========= -->
+    <footer>
+        <p>&copy; 2024 小学语法趣味学习宝典. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
