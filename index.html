@@ -94,7 +94,7 @@
         <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0">
-                    <a href="#" class="text-xl font-bold text-gray-900" data-lang-key="siteName">circlecropimage.app</a>
+                    <a href="#" class="text-xl font-bold text-gray-900 nav-link" data-lang-key="siteName">circlecropimage.app</a>
                 </div>
                 <div class="relative">
                     <button id="lang-switcher-btn" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
@@ -266,9 +266,9 @@
     <footer class="bg-white mt-16 border-t border-gray-200">
         <div class="container mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center text-gray-500">
              <div class="flex justify-center gap-x-6 mb-4">
-                <a href="privacy.html" class="text-sm hover:underline" data-lang-key="privacyPolicy">Privacy Policy</a>
-                <a href="terms.html" class="text-sm hover:underline" data-lang-key="termsOfService">Terms of Service</a>
-                <a href="#" class="text-sm hover:underline" data-lang-key="contactUs">Contact Us</a>
+                <a href="privacy.html" class="text-sm hover:underline nav-link" data-lang-key="privacyPolicy">Privacy Policy</a>
+                <a href="terms.html" class="text-sm hover:underline nav-link" data-lang-key="termsOfService">Terms of Service</a>
+                <a href="#" class="text-sm hover:underline nav-link" data-lang-key="contactUs">Contact Us</a>
             </div>
             <p>&copy; <span id="footer-year"></span> <span data-lang-key="siteName"></span>. <span data-lang-key="footerRights"></span></p>
         </div>
@@ -276,6 +276,18 @@
 
 
     <script>
+        const updateNavLinks = (langCode) => {
+    document.querySelectorAll('.nav-link').forEach(link => {
+        // 假设您的主页是 index.html
+        const originalHref = link.getAttribute('href') === '/' ? '/index.html' : link.getAttribute('href').split('?')[0];
+        link.setAttribute('href', `${originalHref}?lang=${langCode}`);
+    });
+};
+
+    const setLanguage = (lang) => {
+        const langCode = translations[lang] ? lang : 'en';
+        const langData = translations[langCode] || translations.en;
+    
         // --- Language Data ---
         const translations = {
             en: {
@@ -727,6 +739,8 @@
                 termsOfService: "服务条款",
                 contactUs: "联系我们",
                 footerRights: "版权所有。"
+            }
+             updateNavLinks(langCode);
             }
         };
 
