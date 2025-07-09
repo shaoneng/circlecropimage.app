@@ -94,7 +94,7 @@
         <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0">
-                    <a href="#" class="text-xl font-bold text-gray-900 nav-link" data-lang-key="siteName">circlecropimage.app</a>
+                    <a href="/" class="text-xl font-bold text-gray-900 nav-link" data-lang-key="siteName">circlecropimage.app</a>
                 </div>
                 <div class="relative">
                     <button id="lang-switcher-btn" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
@@ -733,7 +733,8 @@
         const flags = {
             en: '🇺🇸', es: '🇪🇸', pt: '🇧🇷', ru: '🇷🇺', de: '🇩🇪', fr: '🇫🇷', ja: '🇯🇵', ko: '🇰🇷', zh: '🇨🇳'
         };
-        const updateNavLinks = (langCode) => {
+        // 2. 将函数定义放在这里
+    const updateNavLinks = (langCode) => {
         document.querySelectorAll('.nav-link').forEach(link => {
             const originalHref = link.getAttribute('href').split('?')[0];
             // 确保主页链接正确
@@ -766,75 +767,46 @@
         updateNavLinks(langCode);
     };
 
+    // 3. DOMContentLoaded 监听器保持不变
+    document.addEventListener('DOMContentLoaded', function() {
+        const langSwitcherBtn = document.getElementById('lang-switcher-btn');
+        const langSwitcherMenu = document.getElementById('lang-switcher-menu');
         
-        document.addEventListener('DOMContentLoaded', function() {
-            // --- DOM Elements ---
-            const langSwitcherBtn = document.getElementById('lang-switcher-btn');
-            const langSwitcherMenu = document.getElementById('lang-switcher-menu');
-            const currentLangFlag = document.getElementById('current-lang-flag');
+        langSwitcherBtn.addEventListener('click', () => {
+             langSwitcherMenu.classList.toggle('hidden');
+             setTimeout(() => {
+                 langSwitcherMenu.classList.toggle('opacity-0');
+                 langSwitcherMenu.classList.toggle('scale-95');
+             }, 10);
+        });
+        
+        document.addEventListener('click', (event) => {
+             if (!langSwitcherBtn.contains(event.target) && !langSwitcherMenu.contains(event.target)) {
+                 langSwitcherMenu.classList.add('hidden', 'opacity-0', 'scale-95');
+             }
+        });
 
-            // --- Language Switcher Logic ---
-            const setLanguage = (lang) => {
-                const langCode = translations[lang] ? lang : 'en'; // Default to English
-                const langData = translations[langCode] || translations.en;
+        langSwitcherMenu.addEventListener('click', (event) => {
+             event.preventDefault();
+             const target = event.target.closest('a');
+             if (target && target.dataset.lang) {
+                 const lang = target.dataset.lang;
+                 setLanguage(lang);
+                 try {
+                     const url = new URL(window.location);
+                     url.searchParams.set('lang', lang);
+                     window.history.pushState({}, '', url);
+                 } catch (e) {
+                     console.warn("Could not update URL with pushState.", e);
+                 }
+             }
+        });
 
-                // Update all elements with data-lang-key on the main page
-                document.querySelectorAll('[data-lang-key]').forEach(element => {
-                    const key = element.getAttribute('data-lang-key');
-                    if (langData[key]) {
-                        // Use innerHTML to render bold tags correctly
-                        element.innerHTML = langData[key];
-                    }
-                });
+        const urlParams = new URLSearchParams(window.location.search);
+        const initialLang = urlParams.get('lang') || 'en';
+        setLanguage(initialLang);
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-                // Update page title and meta description for SEO
-                document.title = langData.pageTitle;
-                document.querySelector('meta[name="description"]').setAttribute('content', langData.metaDescription);
-                
-                // Update HTML lang attribute
-                document.documentElement.lang = langCode;
-
-                // Update flag in button
-                currentLangFlag.textContent = flags[langCode];
-
-                // Close dropdown
-                langSwitcherMenu.classList.add('hidden', 'opacity-0', 'scale-95');
-            };
-
-            // --- Event Listeners ---
-            langSwitcherBtn.addEventListener('click', () => {
-                langSwitcherMenu.classList.toggle('hidden');
-                setTimeout(() => {
-                    langSwitcherMenu.classList.toggle('opacity-0');
-                    langSwitcherMenu.classList.toggle('scale-95');
-                }, 10);
-            });
-            
-            document.addEventListener('click', (event) => {
-                if (!langSwitcherBtn.contains(event.target) && !langSwitcherMenu.contains(event.target)) {
-                    langSwitcherMenu.classList.add('hidden', 'opacity-0', 'scale-95');
-                }
-            });
-
-            langSwitcherMenu.addEventListener('click', (event) => {
-                event.preventDefault();
-                const target = event.target.closest('a');
-                if (target && target.dataset.lang) {
-                    const lang = target.dataset.lang;
-                    setLanguage(lang);
-                    try {
-                        window.history.pushState({}, '', `?lang=${lang}`);
-                    } catch (e) {
-                        console.warn("Could not update URL with pushState. This is expected in sandboxed environments.", e);
-                    }
-                }
-            });
-
-            // --- Initial Setup ---
-            const urlParams = new URLSearchParams(window.location.search);
-            const initialLang = urlParams.get('lang') || 'en';
-            setLanguage(initialLang);
-            document.getElementById('footer-year').textContent = new Date().getFullYear();
 
             // --- CROP TOOL LOGIC ---
             const dropArea=document.getElementById("drop-area"),fileInput=document.getElementById("file-input"),canvas=document.getElementById("canvas"),ctx=canvas.getContext("2d"),previewCanvas=document.getElementById("preview-canvas"),previewCtx=previewCanvas.getContext("2d"),zoomSlider=document.getElementById("zoom-slider"),downloadBtn=document.getElementById("download-btn"),resetBtn=document.getElementById("reset-btn"),uploadContainer=document.getElementById("upload-container"),editorContainer=document.getElementById("editor-container"),resultContainer=document.getElementById("result-container");let image=null,scale=1,offset={x:0,y:0},isDragging=!1,lastMousePosition={x:0,y:0},cropCircleRadius=0;function handleFileSelect(e){const t=e.target.files[0];t&&t.type.startsWith("image/")&&loadImage(t)}function handleDragOver(e){e.preventDefault(),e.stopPropagation(),dropArea.classList.add("drag-over")}function handleDragLeave(e){e.preventDefault(),e.stopPropagation(),dropArea.classList.remove("drag-over")}function handleDrop(e){e.preventDefault(),e.stopPropagation(),dropArea.classList.remove("drag-over");const t=e.dataTransfer.files[0];t&&t.type.startsWith("image/")&&loadImage(t)}function loadImage(e){const t=new FileReader;t.onload=e=>{image=new Image,image.onload=()=>{setupEditor(),drawImage()},image.src=e.target.result},t.readAsDataURL(e)}function setupEditor(){uploadContainer.classList.add("hidden"),editorContainer.classList.remove("hidden"),resultContainer.classList.remove("hidden");const e=canvas.parentElement,t=e.clientWidth;canvas.width=t,canvas.height=t,cropCircleRadius=t/2;const a=image.width/image.height,i=canvas.width/canvas.height;scale=a>i?canvas.width/image.width:canvas.height/image.height,zoomSlider.value=scale,zoomSlider.min=.5*scale,zoomSlider.max=4*scale,offset.x=(canvas.width-image.width*scale)/2,offset.y=(canvas.height-image.height*scale)/2}function drawImage(){image&&(ctx.clearRect(0,0,canvas.width,canvas.height),ctx.save(),ctx.drawImage(image,offset.x,offset.y,image.width*scale,image.height*scale),ctx.restore(),ctx.save(),ctx.fillStyle="rgba(0, 0, 0, 0.5)",ctx.beginPath(),ctx.rect(0,0,canvas.width,canvas.height),ctx.arc(canvas.width/2,canvas.height/2,cropCircleRadius,0,2*Math.PI,!0),ctx.fill(),ctx.restore(),ctx.save(),ctx.strokeStyle="rgba(255, 255, 255, 0.8)",ctx.lineWidth=2,ctx.beginPath(),ctx.arc(canvas.width/2,canvas.height/2,cropCircleRadius,0,2*Math.PI),ctx.stroke(),ctx.restore(),drawPreview())}function drawPreview(){if(!image)return;previewCtx.clearRect(0,0,previewCanvas.width,previewCanvas.height);const e=2*cropCircleRadius/scale,t=-offset.x/scale,a=-offset.y/scale;previewCtx.save(),previewCtx.beginPath(),previewCtx.arc(previewCanvas.width/2,previewCanvas.height/2,previewCanvas.width/2,0,2*Math.PI),previewCtx.clip(),previewCtx.drawImage(image,t,a,e,e,0,0,previewCanvas.width,previewCanvas.height),previewCtx.restore()}function handleZoom(e){const t=parseFloat(e.target.value),a=scale,i=canvas.width/2,o=canvas.height/2;offset.x=i-(i-offset.x)*t/a,offset.y=o-(o-offset.y)*t/a,scale=t,drawImage()}function startDrag(e){e.preventDefault(),isDragging=!0,canvas.classList.remove("cursor-grab"),canvas.classList.add("cursor-grabbing"),lastMousePosition=getMousePos(e)}function drag(e){if(!isDragging)return;e.preventDefault();const t=getMousePos(e);offset.x+=t.x-lastMousePosition.x,offset.y+=t.y-lastMousePosition.y,lastMousePosition=t,drawImage()}function endDrag(){isDragging=!1,canvas.classList.remove("cursor-grabbing"),canvas.classList.add("cursor-grab")}function getMousePos(e){const t=canvas.getBoundingClientRect(),a=e.clientX||e.touches[0].clientX,i=e.clientY||e.touches[0].clientY;return{x:a-t.left,y:i-t.top}}function handleDownload(){if(!image)return;const e=document.createElement("canvas"),t=e.getContext("2d"),a=Math.min(image.width,image.height,4096);e.width=a,e.height=a;const i=2*cropCircleRadius/scale,o=-offset.x/scale,n=-offset.y/scale;t.save(),t.beginPath(),t.arc(a/2,a/2,a/2,0,2*Math.PI),t.clip(),t.drawImage(image,o,n,i,i,0,0,a,a),t.restore();const d=document.createElement("a");d.download=`circle-crop-${Date.now()}.png`,d.href=e.toDataURL("image/png"),d.click()}function resetApp(){image=null,scale=1,offset={x:0,y:0},fileInput.value="",editorContainer.classList.add("hidden"),resultContainer.classList.add("hidden"),uploadContainer.classList.remove("hidden")}dropArea.addEventListener("click",()=>fileInput.click()),fileInput.addEventListener("change",handleFileSelect),dropArea.addEventListener("dragover",handleDragOver),dropArea.addEventListener("dragleave",handleDragLeave),dropArea.addEventListener("drop",handleDrop),zoomSlider.addEventListener("input",handleZoom),downloadBtn.addEventListener("click",handleDownload),resetBtn.addEventListener("click",resetApp),canvas.addEventListener("mousedown",startDrag),canvas.addEventListener("touchstart",startDrag,{passive:!1}),canvas.addEventListener("mousemove",drag),canvas.addEventListener("touchmove",drag,{passive:!1}),canvas.addEventListener("mouseup",endDrag),canvas.addEventListener("touchend",endDrag),canvas.addEventListener("mouseleave",endDrag);
