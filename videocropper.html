@@ -18,10 +18,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        html{scroll-behavior:smooth}body{font-family:'Inter',system-ui,sans-serif}.dropdown-menu{transition:opacity .2s ease-out,transform .2s ease-out}.drag-over{border-color:#2563eb;background-color:#eff6ff}
+        html{scroll-behavior:smooth}body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'}.dropdown-menu{transition:opacity .2s ease-out,transform .2s ease-out}.drag-over{border-color:#2563eb;background-color:#eff6ff}
         #video-preview { clip-path: circle(50% at 50% 50%); }
         .loader { border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        /* Copied from index.html for consistency */
+        input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;background:#2563eb;cursor:pointer;border-radius:50%}
+        input[type=range]::-moz-range-thumb{width:20px;height:20px;background:#2563eb;cursor:pointer;border-radius:50%}
+        .feature-list li{position:relative;padding-left:1.75rem}
+        .feature-list li::before{content:'✓';position:absolute;left:0;color:#2563eb;font-weight:600}
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased">
@@ -178,20 +183,12 @@
 
             async function loadFFmpeg() {
                 try {
-                    statusMessage.textContent = translations[currentLang].statusLoading;
-                    cropButton.disabled = true;
-                    loader.classList.remove('hidden');
                     if (!ffmpeg.isLoaded()) {
                        await ffmpeg.load();
                     }
-                    statusMessage.textContent = translations[currentLang].statusReady;
-                    cropButton.disabled = false;
                 } catch (error) {
                     console.error(error);
-                    statusMessage.textContent = translations[currentLang].errorFFmpegLoad;
-                    statusMessage.classList.add('text-red-600');
-                } finally {
-                    loader.classList.add('hidden');
+                    // This error is critical. We'll show it in the processing step's status.
                 }
             }
             
@@ -214,7 +211,18 @@
                 document.getElementById('video-preview').src = videoURL;
                 document.getElementById('upload-step').classList.add('hidden');
                 document.getElementById('processing-step').classList.remove('hidden');
-                loadFFmpeg();
+                
+                if (ffmpeg.isLoaded()) {
+                    statusMessage.textContent = translations[currentLang].statusReady;
+                    cropButton.disabled = false;
+                } else {
+                    // This state will be hit if the pre-loading is still ongoing or failed.
+                    // The `loadFFmpeg` function handles the UI updates for loading/error states.
+                    // To be safe, let's reflect the loading state here too.
+                    statusMessage.textContent = translations[currentLang].statusLoading;
+                    cropButton.disabled = true;
+                    loader.classList.remove('hidden');
+                }
             };
             
             dropArea.addEventListener('click', () => fileInput.click());
@@ -233,6 +241,7 @@
 
                 cropButton.disabled = true;
                 statusMessage.textContent = translations[currentLang].statusProcessing;
+                loader.classList.remove('hidden');
                 document.getElementById('progress-bar-container').classList.remove('hidden');
                 const progressBar = document.getElementById('progress-bar');
                 
@@ -248,12 +257,11 @@
                 const x = (videoElement.videoWidth - size) / 2;
                 const y = (videoElement.videoHeight - size) / 2;
 
-                // A more robust FFmpeg command for creating a circular alpha mask
                 await ffmpeg.run(
                     '-i', uploadedFile.name,
                     '-vf', `crop=${size}:${size}:${x}:${y},format=yuva420p,geq=a='if(lt(pow(X-W/2,2)+pow(Y-H/2,2),pow(W/2,2)),255,0)'`,
                     '-c:v', 'libvpx-vp9',
-                    '-an', // Remove audio track
+                    '-an',
                     'output.webm'
                 );
 
@@ -266,6 +274,9 @@
             });
             
             document.getElementById('reset-button').addEventListener('click', () => { window.location.reload(); });
+
+            // Start pre-loading FFmpeg as soon as the page is ready
+            loadFFmpeg();
         });
     </script>
 </body>
