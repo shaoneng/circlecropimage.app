@@ -1,3 +1,7 @@
-/*
+# /videocropper.html only: Apply strict headers needed for FFmpeg.wasm
+/videocropper.html
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Embedder-Policy: require-corp
+
+# /* (All other pages): No special headers needed
+# This section ensures other pages can load resources from CDNs.
