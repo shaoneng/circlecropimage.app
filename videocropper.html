@@ -1,283 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Circle Video Cropper - Crop Video Into a Circle</title>
-    <meta name="description" content="Instantly crop any video into a perfect circle with a transparent background. Our free online tool uses FFmpeg.wasm to process videos directly in your browser.">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✂️</text></svg>">
-    <link rel="canonical" href="https://circlecropimage.app/video-cropper.html">
-    <link rel="alternate" hreflang="x-default" href="https://circlecropimage.app/video-cropper.html">
-    <link rel="alternate" hreflang="en" href="https://circlecropimage.app/video-cropper.html?lang=en">
-    <link rel="alternate" hreflang="zh" href="https://circlecropimage.app/video-cropper.html?lang=zh">
-    
-    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Circle Video Cropper - Crop Video Into a Circle</title>
+  <meta name="description"
+        content="Instantly crop any video into a perfect circle with a transparent background. Our free online tool uses FFmpeg.wasm to process videos directly in your browser.">
+  <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✂️</text></svg>">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        html{scroll-behavior:smooth}body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'}.dropdown-menu{transition:opacity .2s ease-out,transform .2s ease-out}.drag-over{border-color:#2563eb;background-color:#eff6ff}
-        #video-preview { clip-path: circle(50% at 50% 50%); }
-        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        /* Copied from index.html for consistency */
-        input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;background:#2563eb;cursor:pointer;border-radius:50%}
-        input[type=range]::-moz-range-thumb{width:20px;height:20px;background:#2563eb;cursor:pointer;border-radius:50%}
-        .feature-list li{position:relative;padding-left:1.75rem}
-        .feature-list li::before{content:'✓';position:absolute;left:0;color:#2563eb;font-weight:600}
-    </style>
+  <link rel="canonical" href="https://circlecropimage.app/videocropper.html">
+  <link rel="alternate" hreflang="x-default" href="https://circlecropimage.app/videocropper.html">
+  <link rel="alternate" hreflang="en" href="https://circlecropimage.app/videocropper.html?lang=en">
+  <link rel="alternate" hreflang="zh" href="https://circlecropimage.app/videocropper.html?lang=zh">
+
+  <script id="ffmpeg-lib"
+    src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"
+    crossorigin="anonymous" defer></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    html { scroll-behavior: smooth }
+    body { font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+           Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif }
+    .dropdown-menu { transition: opacity .2s ease, transform .2s ease }
+    .drag-over      { border-color: #2563eb; background-color: #eff6ff }
+    #video-preview { clip-path: circle(50% at 50% 50%) }
+    .loader {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      width: 40px; height: 40px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg) } }
+    input[type=range]::-webkit-slider-thumb,
+    input[type=range]::-moz-range-thumb {
+      -webkit-appearance: none;
+      width: 20px; height: 20px;
+      background: #2563eb;
+      cursor: pointer; border-radius: 50%
+    }
+    .feature-list li { position: relative; padding-left: 1.75rem }
+    .feature-list li::before {
+      content: '✓'; position: absolute; left: 0;
+      color: #2563eb; font-weight: 600
+    }
+  </style>
 </head>
+
 <body class="bg-gray-50 text-gray-800 antialiased">
-
-    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-200">
-        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex-shrink-0">
-                    <a href="/" class="text-xl font-bold text-gray-900 nav-link" data-lang-key="siteName">circlecropimage.app</a>
-                </div>
-                <div class="relative">
-                    <button id="lang-switcher-btn" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-label="Change language" aria-haspopup="true" aria-expanded="false">
-                        <span id="current-lang-flag">🇺🇸</span>
-                        <svg class="w-5 h-5 ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
-                    </button>
-                    <div id="lang-switcher-menu" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none hidden transform opacity-0 scale-95 dropdown-menu" role="menu" aria-orientation="vertical" aria-labelledby="lang-switcher-btn"></div>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900" data-lang-key="mainTitle"></h1>
-            <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600" data-lang-key="mainIntro"></p>
+  <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-200">
+    <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="text-xl font-bold text-gray-900 nav-link"
+           data-lang-key="siteName">circlecropimage.app</a>
+        <div class="relative">
+          <button id="lang-switcher-btn" type="button"
+                  class="inline-flex items-center justify-center p-2 rounded-md
+                         text-gray-600 hover:text-gray-900 hover:bg-gray-100
+                         focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  aria-haspopup="true" aria-expanded="false">
+            <span id="current-lang-flag">🇺🇸</span>
+            <svg class="w-5 h-5 ml-1" fill="currentColor"
+                 viewBox="0 0 20 20"><path fill-rule="evenodd"
+                 d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414
+                 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                 clip-rule="evenodd"/></svg>
+          </button>
+          <div id="lang-switcher-menu"
+               class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg
+                      bg-white ring-1 ring-black ring-opacity-5 hidden dropdown-menu"></div>
         </div>
+      </div>
+    </nav>
+  </header>
 
-        <div id="tool-section" class="max-w-2xl mx-auto bg-white rounded-2xl shadow-2xl p-6 sm:p-8">
-            
-            <div id="upload-step">
-                <div id="drop-area" role="button" tabindex="0" class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center cursor-pointer hover:bg-gray-100 transition-colors">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9A2.25 2.25 0 0 0 13.5 5.25h-9A2.25 2.25 0 0 0 2.25 7.5v9A2.25 2.25 0 0 0 4.5 18.75Z" /></svg>
-                    <p class="mt-4 text-lg text-gray-600">
-                        <span data-lang-key="uploadCTA"></span>
-                        <span class="font-semibold text-blue-600" data-lang-key="uploadClick"></span>
-                    </p>
-                    <p class="text-sm text-gray-500 mt-1" data-lang-key="uploadFormats"></p>
-                    <input type="file" id="file-input" class="hidden" accept="video/*">
-                </div>
-                <div id="upload-error" class="mt-4 text-center text-sm text-red-600 font-semibold hidden"></div>
-                <div class="mt-4 text-center text-sm text-gray-500" data-lang-key="privacyNotice"></div>
-            </div>
-
-            <div id="processing-step" class="hidden text-center">
-                <video id="video-preview" class="w-48 h-48 mx-auto bg-gray-200 rounded-full object-cover shadow-inner" autoplay muted loop playsinline></video>
-                <div id="status-message" class="mt-6 text-lg font-semibold text-gray-700"></div>
-                <div id="progress-bar-container" class="w-full bg-gray-200 rounded-full h-2.5 mt-4 hidden">
-                    <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
-                </div>
-                <div id="loader" class="loader mx-auto mt-4 hidden"></div>
-                <button id="crop-button" class="mt-8 w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed" disabled data-lang-key="cropButton"></button>
-            </div>
-
-            <div id="download-step" class="hidden text-center">
-                <h3 class="text-2xl font-bold text-green-600" data-lang-key="successTitle"></h3>
-                <p class="mt-2 text-gray-600" data-lang-key="successDesc"></p>
-                <a id="download-link" href="#" download="circle-video.webm" class="mt-8 inline-block w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700">
-                    <span data-lang-key="downloadButton"></span>
-                </a>
-                <button id="reset-button" class="mt-3 w-full text-sm text-gray-600 hover:underline" data-lang-key="resetButton"></button>
-            </div>
-
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900"
+          data-lang-key="mainTitle"></h1>
+      <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600"
+         data-lang-key="mainIntro"></p>
+    </div>
+    <div id="tool-section"
+         class="max-w-2xl mx-auto bg-white rounded-2xl shadow-2xl p-6 sm:p-8">
+      <div id="upload-step">
+        <div id="drop-area" role="button" tabindex="0"
+             class="border-2 border-dashed border-gray-300 rounded-xl p-8
+                    text-center cursor-pointer hover:bg-gray-100">
+          <svg class="mx-auto h-12 w-12 text-gray-400" fill="none"
+               viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="m15.75 10.5 4.72-4.72a.75.75 0 0 1
+                   1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5
+                   18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9A2.25 2.25 0 0
+                   0 13.5 5.25h-9A2.25 2.25 0 0 0 2.25 7.5v9A2.25
+                   2.25 0 0 0 4.5 18.75Z"/>
+          </svg>
+          <p class="mt-4 text-lg text-gray-600">
+            <span data-lang-key="uploadCTA"></span>
+            <span class="font-semibold text-blue-600"
+                  data-lang-key="uploadClick"></span>
+          </p>
+          <p class="text-sm text-gray-500 mt-1"
+             data-lang-key="uploadFormats"></p>
+          <input type="file" id="file-input" class="hidden" accept="video/*">
         </div>
-    </main>
-    
-    <footer class="bg-white mt-16 border-t border-gray-200">
-        <div class="container mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center text-gray-500">
-             <div class="flex justify-center gap-x-6 mb-4">
-                <a href="/" class="text-sm hover:underline nav-link" data-lang-key="homeLink"></a>
-                <a href="/video-cropper.html" class="text-sm hover:underline nav-link" data-lang-key="videoCropperLink"></a>
-                <a href="/privacy.html" class="text-sm hover:underline nav-link" data-lang-key="privacyLink"></a>
-                <a href="/terms.html" class="text-sm hover:underline nav-link" data-lang-key="termsLink"></a>
-            </div>
-            <p>&copy; <span id="footer-year"></span> <span data-lang-key="siteName"></span>. <span data-lang-key="footerRights"></span></p>
+        <div id="upload-error"
+             class="mt-4 text-center text-sm text-red-600 font-semibold hidden"></div>
+        <div class="mt-4 text-center text-sm text-gray-500"
+             data-lang-key="privacyNotice"></div>
+      </div>
+      <div id="processing-step" class="hidden text-center">
+        <video id="video-preview"
+               class="w-48 h-48 mx-auto bg-gray-200 rounded-full
+                      object-cover shadow-inner"
+               autoplay muted loop playsinline></video>
+        <div id="status-message"
+             class="mt-6 text-lg font-semibold text-gray-700"></div>
+        <div id="progress-bar-container"
+             class="w-full bg-gray-200 rounded-full h-2.5 mt-4 hidden">
+          <div id="progress-bar"
+               class="bg-blue-600 h-2.5 rounded-full" style="width:0%"></div>
         </div>
-    </footer>
+        <div id="loader" class="loader mx-auto mt-4 hidden"></div>
+        <button id="crop-button"
+                class="mt-8 w-full bg-blue-600 text-white font-bold py-3 px-4
+                       rounded-lg hover:bg-blue-700 disabled:bg-gray-400
+                       disabled:cursor-not-allowed"
+                disabled data-lang-key="cropButton"></button>
+      </div>
+      <div id="download-step" class="hidden text-center">
+        <h3 class="text-2xl font-bold text-green-600"
+            data-lang-key="successTitle"></h3>
+        <p class="mt-2 text-gray-600" data-lang-key="successDesc"></p>
+        <a id="download-link" href="#" download="circle-video.webm"
+           class="mt-8 inline-block w-full bg-green-600 text-white font-bold
+                  py-3 px-4 rounded-lg hover:bg-green-700">
+          <span data-lang-key="downloadButton"></span>
+        </a>
+        <button id="reset-button"
+                class="mt-3 w-full text-sm text-gray-600 hover:underline"
+                data-lang-key="resetButton"></button>
+      </div>
+    </div>
+  </main>
+  <footer class="bg-white mt-16 border-t border-gray-200">
+    <div class="container mx-auto py-8 px-4 sm:px-6 lg:px-8
+                text-center text-gray-500">
+      <div class="flex justify-center gap-x-6 mb-4">
+        <a href="/" class="text-sm hover:underline nav-link"
+           data-lang-key="homeLink"></a>
+        <a href="/video-cropper.html"
+           class="text-sm hover:underline nav-link"
+           data-lang-key="videoCropperLink"></a>
+        <a href="/privacy.html" class="text-sm hover:underline nav-link"
+           data-lang-key="privacyLink"></a>
+        <a href="/terms.html" class="text-sm hover:underline nav-link"
+           data-lang-key="termsLink"></a>
+      </div>
+      <p>&copy; <span id="footer-year"></span>
+         <span data-lang-key="siteName"></span>.
+         <span data-lang-key="footerRights"></span></p>
+    </div>
+  </footer>
 
-    <script defer>
-        const translations = {
-            en: { siteName: "circlecropimage.app", mainTitle: "Circle Video Cropper", mainIntro: "Crop your video into a perfect circle. Ideal for profile videos, animations, and web design. The output is a WebM file with a transparent background.", uploadCTA: "Drag & drop your video, or ", uploadClick: "click to upload", uploadFormats: "Recommended: MP4, MOV. Max size: 25MB", privacyNotice: "Your video is processed entirely in your browser and is never uploaded.", cropButton: "Start Cropping", successTitle: "Success!", successDesc: "Your circular video is ready for download.", downloadButton: "Download Circular Video (.webm)", resetButton: "Crop another video", statusLoading: "Loading FFmpeg Core (~25 MB)...", statusReady: "Ready to Crop!", statusProcessing: "Processing... this may take a while.", errorFileSize: "File is too large. Please select a file under 25MB.", errorFFmpegLoad: "Failed to load the video processor. Please check your connection or try a different browser.", homeLink: "Image Cropper", videoCropperLink: "Video Cropper", privacyLink: "Privacy Policy", termsLink: "Terms of Service", footerRights: "All rights reserved."},
-            zh: { siteName: "circlecropimage.app", mainTitle: "圆形视频裁剪工具", mainIntro: "将你的视频裁剪成一个完美的圆形。适用于个人主页视频、动画和网页设计。输出文件为带有透明背景的 WebM 格式。", uploadCTA: "拖放你的视频文件，或 ", uploadClick: "点击上传", uploadFormats: "推荐格式：MP4、MOV。最大 25MB", privacyNotice: "你的视频完全在浏览器中处理，绝不会被上传。", cropButton: "开始裁剪", successTitle: "裁剪成功！", successDesc: "你的圆形视频已准备就绪，可以下载了。", downloadButton: "下载圆形视频 (.webm)", resetButton: "裁剪下一个视频", statusLoading: "正在加载 FFmpeg 核心组件 (~25 MB)...", statusReady: "已准备好，可以开始裁剪！", statusProcessing: "处理中... 这可能需要一些时间。", errorFileSize: "文件过大，请选择小于 25MB 的文件。", errorFFmpegLoad: "视频处理器加载失败。请检查您的网络连接或尝试更换浏览器。", homeLink: "图片裁剪", videoCropperLink: "视频裁剪", privacyLink: "隐私政策", termsLink: "服务条款", footerRights: "版权所有。"},
-        };
-        const flags = { en: '🇺🇸', zh: '🇨🇳' };
-        const langNames = { en: "English", zh: "中文 (简体)" };
+  <script type="module">
+    /* --------- i18n 多语言配置 --------- */
+    const translations = {
+      en:{siteName:"circlecropimage.app",mainTitle:"Circle Video Cropper",mainIntro:"Crop your video into a perfect circle. Ideal for profile videos, animations, and web design. The output is a WebM file with a transparent background.",uploadCTA:"Drag & drop your video, or ",uploadClick:"click to upload",uploadFormats:"Recommended: MP4, MOV. Max size: 25MB",privacyNotice:"Your video is processed entirely in your browser and is never uploaded.",cropButton:"Start Cropping",successTitle:"Success!",successDesc:"Your circular video is ready for download.",downloadButton:"Download Circular Video (.webm)",resetButton:"Crop another video",statusLoading:"Loading FFmpeg Core (~25 MB)...",statusReady:"Ready to Crop!",statusProcessing:"Processing... this may take a while.",errorFileSize:"File is too large. Please select a file under 25MB.",errorFFmpegLoad:"Failed to load the video processor. Please try again.",homeLink:"Image Cropper",videoCropperLink:"Video Cropper",privacyLink:"Privacy Policy",termsLink:"Terms of Service",footerRights:"All rights reserved."},
+      zh:{siteName:"circlecropimage.app",mainTitle:"圆形视频裁剪工具",mainIntro:"将你的视频裁剪成一个完美的圆形。适用于个人主页视频、动画和网页设计。输出文件为带有透明背景的 WebM 格式。",uploadCTA:"拖放你的视频文件，或 ",uploadClick:"点击上传",uploadFormats:"推荐格式：MP4、MOV。最大 25MB",privacyNotice:"你的视频完全在浏览器中处理，绝不会被上传。",cropButton:"开始裁剪",successTitle:"裁剪成功！",successDesc:"你的圆形视频已准备就绪，可以下载了。",downloadButton:"下载圆形视频 (.webm)",resetButton:"裁剪下一个视频",statusLoading:"正在加载 FFmpeg 核心组件 (~25 MB)...",statusReady:"已准备好，可以开始裁剪！",statusProcessing:"处理中... 这可能需要一些时间。",errorFileSize:"文件过大，请选择小于 25MB 的文件。",errorFFmpegLoad:"视频处理器加载失败。请检查网络或更换浏览器。",homeLink:"图片裁剪",videoCropperLink:"视频裁剪",privacyLink:"隐私政策",termsLink:"服务条款",footerRights:"版权所有。"}
+    };
+    const flags = { en:"🇺🇸", zh:"🇨🇳" };
+    const langNames = { en:"English", zh:"中文 (简体)" };
+    let currentLang = 'en';
+
+    function updateNavLinks(lang){
+      document.querySelectorAll('.nav-link').forEach(link=>{
+        let base = link.getAttribute('href').split('?')[0];
+        if(base==='/') base='/index.html';
+        link.setAttribute('href', `${base}?lang=${lang}`);
+      });
+    }
+    function setLanguage(lang='en'){
+      currentLang = translations[lang] ? lang : 'en';
+      const t = translations[currentLang];
+      document.querySelectorAll('[data-lang-key]').forEach(el=>{
+        const k = el.getAttribute('data-lang-key');
+        if(t[k]) el.innerHTML = t[k];
+      });
+      document.documentElement.lang = currentLang;
+      document.getElementById('current-lang-flag').textContent = flags[currentLang];
+      updateNavLinks(currentLang);
+    }
+
+    /* --------- On DOM Ready DOM加载后执行 --------- */
+    document.addEventListener('DOMContentLoaded', () => {
+      // ----------------- 第一步：初始化UI和语言 -----------------
+      const btn = document.getElementById('lang-switcher-btn');
+      const menu = document.getElementById('lang-switcher-menu');
+      menu.innerHTML = Object.keys(flags).map(code=>`
+        <a href="?lang=${code}" class="flex items-center px-4 py-2 text-sm
+                 text-gray-700 hover:bg-gray-100" data-lang="${code}">
+          <span class="mr-3">${flags[code]}</span>${langNames[code]}
+        </a>`).join('');
+      btn.onclick = ()=>{menu.classList.toggle('hidden'); btn.setAttribute('aria-expanded', !menu.classList.contains('hidden'));};
+      document.addEventListener('click',e=>{ if(!btn.contains(e.target)&&!menu.contains(e.target)){ menu.classList.add('hidden'); btn.setAttribute('aria-expanded','false'); } });
+      menu.addEventListener('click',e=>{
+        const a=e.target.closest('a'); if(!a) return;
+        e.preventDefault(); const lang=a.dataset.lang;
+        setLanguage(lang);
+        const url=new URL(location); url.searchParams.set('lang',lang);
+        history.pushState({},'',url); menu.classList.add('hidden');
+      });
+
+      setLanguage(new URLSearchParams(location.search).get('lang') || 'en');
+      document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+      // ----------------- 第二步：获取DOM元素引用 -----------------
+      const $ = id => document.getElementById(id);
+      const status = id => translations[currentLang][id];
+      
+      const dropArea = $('drop-area');
+      const fileInput = $('file-input');
+      const uploadError = $('upload-error');
+      const preview = $('video-preview');
+      const statusMsg = $('status-message');
+      const cropBtn = $('crop-button');
+      const loader = $('loader');
+      const progressBar = $('progress-bar');
+      const progWrap = $('progress-bar-container');
+
+      const MAX = 25 * 1024 * 1024;
+      let file = null;
+      let ffmpeg = null; // 将ffmpeg实例移到这里
+
+      // ----------------- 第三步：立即为UI元素绑定事件 -----------------
+      function handleFile(f) {
+        if (!f) return;
+        if (f.size > MAX) {
+          uploadError.textContent = status('errorFileSize');
+          uploadError.classList.remove('hidden');
+          return;
+        }
+        uploadError.classList.add('hidden');
+        file = f;
+        preview.src = URL.createObjectURL(f);
+        $('upload-step').classList.add('hidden');
+        $('processing-step').classList.remove('hidden');
         
-        let currentLang = 'en';
-
-        function updateNavLinks(lang) {
-            document.querySelectorAll('.nav-link').forEach(link => {
-                let originalHref = link.getAttribute('href').split('?')[0];
-                if (originalHref === '/') originalHref = '/index.html';
-                link.setAttribute('href', `${originalHref}?lang=${lang}`);
-            });
+        // 如果FFmpeg已加载，更新状态，否则显示加载中
+        if (ffmpeg && ffmpeg.isLoaded()) {
+          statusMsg.textContent = status('statusReady');
+          cropBtn.disabled = false;
+        } else {
+          statusMsg.textContent = status('statusLoading');
+          loader.classList.remove('hidden');
         }
+      }
 
-        function setLanguage(lang) {
-            currentLang = translations[lang] ? lang : 'en';
-            const langData = translations[currentLang];
-            document.querySelectorAll('[data-lang-key]').forEach(element => {
-                const key = element.getAttribute('data-lang-key');
-                if (langData[key]) element.innerHTML = langData[key];
-            });
-            document.documentElement.lang = currentLang;
-            document.getElementById('current-lang-flag').textContent = flags[currentLang];
-            updateNavLinks(currentLang);
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const langSwitcherBtn = document.getElementById('lang-switcher-btn');
-            const langSwitcherMenu = document.getElementById('lang-switcher-menu');
-            let menuHtml = `<div class='py-1' role='menu' aria-orientation='vertical' aria-labelledby='lang-switcher-btn'>`;
-            for (const code in flags) {
-                menuHtml += `<a href="?lang=${code}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" data-lang="${code}"><span class="mr-3">${flags[code]}</span> ${langNames[code]}</a>`;
-            }
-            menuHtml += `</div>`;
-            langSwitcherMenu.innerHTML = menuHtml;
-
-            langSwitcherBtn.addEventListener('click', () => {
-                langSwitcherMenu.classList.toggle('hidden');
-                langSwitcherBtn.setAttribute('aria-expanded', !langSwitcherMenu.classList.contains('hidden'));
-            });
-            document.addEventListener('click', (event) => {
-                if (!langSwitcherBtn.contains(event.target) && !langSwitcherMenu.contains(event.target)) {
-                    langSwitcherMenu.classList.add('hidden');
-                    langSwitcherBtn.setAttribute('aria-expanded', 'false');
-                }
-            });
-            langSwitcherMenu.addEventListener('click', (event) => {
-                event.preventDefault();
-                const target = event.target.closest('a');
-                if (target && target.dataset.lang) {
-                    setLanguage(target.dataset.lang);
-                    const url = new URL(window.location);
-                    url.searchParams.set('lang', target.dataset.lang);
-                    window.history.pushState({}, '', url);
-                    langSwitcherMenu.classList.add('hidden');
-                }
-            });
-
-            const urlParams = new URLSearchParams(window.location.search);
-            setLanguage(urlParams.get('lang') || 'en');
-            document.getElementById('footer-year').textContent = new Date().getFullYear();
-
-            // --- Cropper Logic ---
-            const { createFFmpeg, fetchFile } = FFmpeg;
-            const ffmpeg = createFFmpeg({ log: true });
-            
-            const statusMessage = document.getElementById('status-message');
-            const cropButton = document.getElementById('crop-button');
-            const fileInput = document.getElementById('file-input');
-            const dropArea = document.getElementById('drop-area');
-            const uploadError = document.getElementById('upload-error');
-            const loader = document.getElementById('loader');
-
-            async function loadFFmpeg() {
-                try {
-                    if (!ffmpeg.isLoaded()) {
-                       await ffmpeg.load();
-                    }
-                } catch (error) {
-                    console.error(error);
-                    // This error is critical. We'll show it in the processing step's status.
-                }
-            }
-            
-            let uploadedFile = null;
-
-            const handleFile = (file) => {
-                if (!file) return;
-                const MAX_SIZE = 25 * 1024 * 1024;
-                if (file.size > MAX_SIZE) {
-                    uploadError.textContent = translations[currentLang].errorFileSize;
-                    uploadError.classList.remove('hidden');
-                    fileInput.value = '';
-                    return;
-                }
-                if (!file.type.startsWith('video/')) return;
-                
-                uploadError.classList.add('hidden');
-                uploadedFile = file;
-                const videoURL = URL.createObjectURL(file);
-                document.getElementById('video-preview').src = videoURL;
-                document.getElementById('upload-step').classList.add('hidden');
-                document.getElementById('processing-step').classList.remove('hidden');
-                
-                if (ffmpeg.isLoaded()) {
-                    statusMessage.textContent = translations[currentLang].statusReady;
-                    cropButton.disabled = false;
-                } else {
-                    // This state will be hit if the pre-loading is still ongoing or failed.
-                    // The `loadFFmpeg` function handles the UI updates for loading/error states.
-                    // To be safe, let's reflect the loading state here too.
-                    statusMessage.textContent = translations[currentLang].statusLoading;
-                    cropButton.disabled = true;
-                    loader.classList.remove('hidden');
-                }
-            };
-            
-            dropArea.addEventListener('click', () => fileInput.click());
-            fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
-            dropArea.addEventListener('dragover', (e) => { e.preventDefault(); e.stopPropagation(); e.currentTarget.classList.add('drag-over'); });
-            dropArea.addEventListener('dragleave', (e) => { e.preventDefault(); e.stopPropagation(); e.currentTarget.classList.remove('drag-over'); });
-            dropArea.addEventListener('drop', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                e.currentTarget.classList.remove('drag-over');
-                handleFile(e.dataTransfer.files[0]);
-            });
-
-            cropButton.addEventListener('click', async () => {
-                if (!uploadedFile || !ffmpeg.isLoaded()) return;
-
-                cropButton.disabled = true;
-                statusMessage.textContent = translations[currentLang].statusProcessing;
-                loader.classList.remove('hidden');
-                document.getElementById('progress-bar-container').classList.remove('hidden');
-                const progressBar = document.getElementById('progress-bar');
-                
-                ffmpeg.FS('writeFile', uploadedFile.name, await fetchFile(uploadedFile));
-                ffmpeg.setProgress(({ ratio }) => {
-                    progressBar.style.width = `${Math.round(ratio * 100)}%`;
-                });
-
-                const videoElement = document.createElement('video');
-                videoElement.src = URL.createObjectURL(uploadedFile);
-                await new Promise(resolve => { videoElement.onloadedmetadata = resolve; });
-                const size = Math.min(videoElement.videoWidth, videoElement.videoHeight);
-                const x = (videoElement.videoWidth - size) / 2;
-                const y = (videoElement.videoHeight - size) / 2;
-
-                await ffmpeg.run(
-                    '-i', uploadedFile.name,
-                    '-vf', `crop=${size}:${size}:${x}:${y},format=yuva420p,geq=a='if(lt(pow(X-W/2,2)+pow(Y-H/2,2),pow(W/2,2)),255,0)'`,
-                    '-c:v', 'libvpx-vp9',
-                    '-an',
-                    'output.webm'
-                );
-
-                const data = ffmpeg.FS('readFile', 'output.webm');
-                const url = URL.createObjectURL(new Blob([data.buffer], { type: 'video/webm' }));
-                
-                document.getElementById('download-link').href = url;
-                document.getElementById('processing-step').classList.add('hidden');
-                document.getElementById('download-step').classList.remove('hidden');
-            });
-            
-            document.getElementById('reset-button').addEventListener('click', () => { window.location.reload(); });
-
-            // Start pre-loading FFmpeg as soon as the page is ready
-            loadFFmpeg();
+      // 立即绑定事件，确保UI即时响应
+      ['dragover', 'dragenter'].forEach(evt => {
+        dropArea.addEventListener(evt, e => {
+          e.preventDefault(); dropArea.classList.add('drag-over');
         });
-    </script>
+      });
+      ['dragleave', 'drop'].forEach(evt => {
+        dropArea.addEventListener(evt, e => {
+          e.preventDefault(); dropArea.classList.remove('drag-over');
+        });
+      });
+      dropArea.addEventListener('drop', e => handleFile(e.dataTransfer.files[0]));
+      dropArea.addEventListener('click', () => fileInput.click());
+      fileInput.onchange = e => handleFile(e.target.files[0]);
+      
+      $('reset-button').onclick = () => location.reload();
+
+
+      // ----------------- 第四步：在后台异步加载和初始化FFmpeg -----------------
+      async function initializeFFmpeg() {
+        // 等待 <script> 标签加载完成，确保 window.FFmpeg 可用
+        await new Promise(res => {
+          if (window.FFmpeg) return res();
+          $('ffmpeg-lib').addEventListener('load', res, { once: true });
+        });
+
+        const { createFFmpeg, fetchFile } = window.FFmpeg;
+        ffmpeg = createFFmpeg({
+          log: true,
+          corePath: 'https://unpkg.com/@ffmpeg/core@0.12.4/dist/umd/ffmpeg-core.js',
+          wasmPath: 'https://unpkg.com/@ffmpeg/core@0.12.4/dist/umd/ffmpeg-core.wasm'
+        });
+
+        // 如果用户已选择文件，则显示加载状态
+        if (file) {
+          statusMsg.textContent = status('statusLoading');
+          loader.classList.remove('hidden');
+        }
+
+        try {
+          await ffmpeg.load();
+          // 如果用户已选择文件，加载完成后更新状态
+          if (file) {
+            statusMsg.textContent = status('statusReady');
+            cropBtn.disabled = false;
+            loader.classList.add('hidden');
+          }
+        } catch (e) {
+          console.error(e);
+          statusMsg.textContent = status('errorFFmpegLoad');
+          loader.classList.add('hidden');
+        }
+        
+        // 为裁剪按钮绑定事件（在ffmpeg初始化后进行）
+        cropBtn.onclick = async () => {
+          if (!file || !ffmpeg || !ffmpeg.isLoaded()) return;
+          
+          cropBtn.disabled = true;
+          loader.classList.remove('hidden');
+          statusMsg.textContent = status('statusProcessing');
+          progWrap.classList.remove('hidden');
+
+          ffmpeg.FS('writeFile', file.name, await fetchFile(file));
+          ffmpeg.setProgress(({ ratio }) => {
+            progressBar.style.width = `${Math.round(ratio * 100)}%`;
+          });
+
+          const tmpVid = document.createElement('video');
+          tmpVid.src = URL.createObjectURL(file);
+          await new Promise(res => tmpVid.onloadedmetadata = res);
+          const size = Math.min(tmpVid.videoWidth, tmpVid.videoHeight);
+          const x = (tmpVid.videoWidth - size) / 2;
+          const y = (tmpVid.videoHeight - size) / 2;
+
+          await ffmpeg.run(
+            '-i', file.name,
+            '-vf', `crop=${size}:${size}:${x}:${y},format=yuva420p,geq=a='if(lt(pow(X-W/2,2)+pow(Y-H/2,2),pow(W/2,2)),255,0)'`,
+            '-c:v', 'libvpx-vp9', '-an', 'output.webm'
+          );
+          const data = ffmpeg.FS('readFile', 'output.webm');
+          const url = URL.createObjectURL(new Blob([data.buffer], { type: 'video/webm' }));
+
+          $('download-link').href = url;
+          $('processing-step').classList.add('hidden');
+          $('download-step').classList.remove('hidden');
+        };
+      }
+
+      // 立即开始在后台加载FFmpeg
+      initializeFFmpeg();
+    });
+  </script>
 </body>
 </html>
