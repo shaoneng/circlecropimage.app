@@ -1,361 +1,277 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Circle Video Cropper - Crop Video Into a Circle</title>
-  <meta name="description"
-        content="Instantly crop any video into a perfect circle with a transparent background. Our free online tool uses FFmpeg.wasm to process videos directly in your browser.">
-  <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✂️</text></svg>">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-E7LYWPRFQ4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-E7LYWPRFQ4');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9886602787991072" crossorigin="anonymous"></script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Circle Video Crop Tool - Free Online Round Video Cropper</title>
+    <meta name="description" content="Crop your video into a perfect circle with our free online tool. The ideal round video cropper for creating circular profile videos, logos, and more. Supports MP4, and WEBM. No registration, instant download.">
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✂️</text></svg>">
+    
+    <link rel="canonical" href="https://circlecropimage.app/">
+    <link rel="alternate" hreflang="x-default" href="https://circlecropimage.app/">
+    <link rel="alternate" hreflang="en" href="https://circlecropimage.app/?lang=en">
+    <link rel="alternate" hreflang="es" href="https://circlecropimage.app/?lang=es">
+    <link rel="alternate" hreflang="pt" href="https://circlecropimage.app/?lang=pt">
+    <link rel="alternate" hreflang="ru" href="https://circlecropimage.app/?lang=ru">
+    <link rel="alternate" hreflang="de" href="https://circlecropimage.app/?lang=de">
+    <link rel="alternate" hreflang="fr" href="https://circlecropimage.app/?lang=fr">
+    <link rel="alternate" hreflang="ja" href="https://circlecropimage.app/?lang=ja">
+    <link rel="alternate" hreflang="ko" href="https://circlecropimage.app/?lang=ko">
+    <link rel="alternate" hreflang="zh" href="https://circlecropimage.app/?lang=zh">
 
-  <link rel="canonical" href="https://circlecropimage.app/videocropper.html">
-  <link rel="alternate" hreflang="x-default" href="https://circlecropimage.app/videocropper.html">
-  <link rel="alternate" hreflang="en" href="https://circlecropimage.app/videocropper.html?lang=en">
-  <link rel="alternate" hreflang="zh" href="https://circlecropimage.app/videocropper.html?lang=zh">
-
-  <script id="ffmpeg-lib"
-    src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"
-    crossorigin="anonymous" defer></script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-        rel="stylesheet" media="print" onload="this.media='all'">
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <style>
-    html { scroll-behavior: smooth }
-    body { font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-           Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif }
-    .dropdown-menu { transition: opacity .2s ease, transform .2s ease }
-    .drag-over      { border-color: #2563eb; background-color: #eff6ff }
-    #video-preview { clip-path: circle(50% at 50% 50%) }
-    .loader {
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid #3498db;
-      border-radius: 50%;
-      width: 40px; height: 40px;
-      animation: spin 1s linear infinite;
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Circle Video Crop Tool",
+      "description": "A free online tool to crop videos into a perfect circle. Ideal for profile pictures, logos, and avatars. Supports MP4, WEBM and processes media securely in the user's browser.",
+      "url": "https://circlecropimage.app/",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Any (Web browser)",
+      "offers": {
+        "@type": "Offer",
+        "price": "0"
+      },
+      "creator": {
+        "@type": "Organization",
+        "name": "circlecropimage.app"
+      }
     }
-    @keyframes spin { to { transform: rotate(360deg) } }
-    input[type=range]::-webkit-slider-thumb,
-    input[type=range]::-moz-range-thumb {
-      -webkit-appearance: none;
-      width: 20px; height: 20px;
-      background: #2563eb;
-      cursor: pointer; border-radius: 50%
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "How do I crop a video into a circle?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Simply upload your video, use the slider to adjust the circle size, drag the circle to your desired area, and click 'Start Recording'. Once you stop, you can download the final video."
+        }
+      },{
+        "@type": "Question",
+        "name": "Will the final video have a transparent background?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The downloaded video will be a high-quality WEBM file with a transparent background outside the circle, making it perfect for use on any website or design project."
+        }
+      },{
+        "@type": "Question",
+        "name": "Are my uploaded videos safe?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, your privacy is our priority. The entire video processing happens in your web browser. Your videos are never sent to or stored on our servers."
+        }
+      }]
     }
-    .feature-list li { position: relative; padding-left: 1.75rem }
-    .feature-list li::before {
-      content: '✓'; position: absolute; left: 0;
-      color: #2563eb; font-weight: 600
-    }
-  </style>
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        html{scroll-behavior:smooth}body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'}.dropdown-menu{transition:opacity .2s ease-out,transform .2s ease-out}.drag-over{border-color:#2563eb;background-color:#eff6ff}input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;background:#2563eb;cursor:pointer;border-radius:50%}input[type=range]::-moz-range-thumb{width:20px;height:20px;background:#2563eb;cursor:pointer;border-radius:50%}.feature-list li{position:relative;padding-left:1.75rem}.feature-list li::before{content:'✓';position:absolute;left:0;color:#2563eb;font-weight:600}
+        .canvas-wrapper.is-dragging { cursor: grabbing; }
+    </style>
 </head>
-
 <body class="bg-gray-50 text-gray-800 antialiased">
-  <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-200">
-    <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
-        <a href="/" class="text-xl font-bold text-gray-900 nav-link"
-           data-lang-key="siteName">circlecropimage.app</a>
-        <div class="relative">
-          <button id="lang-switcher-btn" type="button"
-                  class="inline-flex items-center justify-center p-2 rounded-md
-                         text-gray-600 hover:text-gray-900 hover:bg-gray-100
-                         focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  aria-haspopup="true" aria-expanded="false">
-            <span id="current-lang-flag">🇺🇸</span>
-            <svg class="w-5 h-5 ml-1" fill="currentColor"
-                 viewBox="0 0 20 20"><path fill-rule="evenodd"
-                 d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414
-                 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                 clip-rule="evenodd"/></svg>
-          </button>
-          <div id="lang-switcher-menu"
-               class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg
-                      bg-white ring-1 ring-black ring-opacity-5 hidden dropdown-menu"></div>
-        </div>
-      </div>
-    </nav>
-  </header>
 
-  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="text-center mb-12">
-      <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900"
-          data-lang-key="mainTitle"></h1>
-      <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600"
-         data-lang-key="mainIntro"></p>
-    </div>
-    <div id="tool-section"
-         class="max-w-2xl mx-auto bg-white rounded-2xl shadow-2xl p-6 sm:p-8">
-      <div id="upload-step">
-        <div id="drop-area" role="button" tabindex="0"
-             class="border-2 border-dashed border-gray-300 rounded-xl p-8
-                    text-center cursor-pointer hover:bg-gray-100">
-          <svg class="mx-auto h-12 w-12 text-gray-400" fill="none"
-               viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                  d="m15.75 10.5 4.72-4.72a.75.75 0 0 1
-                   1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5
-                   18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9A2.25 2.25 0 0
-                   0 13.5 5.25h-9A2.25 2.25 0 0 0 2.25 7.5v9A2.25
-                   2.25 0 0 0 4.5 18.75Z"/>
-          </svg>
-          <p class="mt-4 text-lg text-gray-600">
-            <span data-lang-key="uploadCTA"></span>
-            <span class="font-semibold text-blue-600"
-                  data-lang-key="uploadClick"></span>
-          </p>
-          <p class="text-sm text-gray-500 mt-1"
-             data-lang-key="uploadFormats"></p>
-          <input type="file" id="file-input" class="hidden" accept="video/*">
-        </div>
-        <div id="upload-error"
-             class="mt-4 text-center text-sm text-red-600 font-semibold hidden"></div>
-        <div class="mt-4 text-center text-sm text-gray-500"
-             data-lang-key="privacyNotice"></div>
-      </div>
-      <div id="processing-step" class="hidden text-center">
-        <video id="video-preview"
-               class="w-48 h-48 mx-auto bg-gray-200 rounded-full
-                      object-cover shadow-inner"
-               autoplay muted loop playsinline></video>
-        <div id="status-message"
-             class="mt-6 text-lg font-semibold text-gray-700"></div>
-        <div id="progress-bar-container"
-             class="w-full bg-gray-200 rounded-full h-2.5 mt-4 hidden">
-          <div id="progress-bar"
-               class="bg-blue-600 h-2.5 rounded-full" style="width:0%"></div>
-        </div>
-        <div id="loader" class="loader mx-auto mt-4 hidden"></div>
-        <button id="crop-button"
-                class="mt-8 w-full bg-blue-600 text-white font-bold py-3 px-4
-                       rounded-lg hover:bg-blue-700 disabled:bg-gray-400
-                       disabled:cursor-not-allowed"
-                disabled data-lang-key="cropButton"></button>
-      </div>
-      <div id="download-step" class="hidden text-center">
-        <h3 class="text-2xl font-bold text-green-600"
-            data-lang-key="successTitle"></h3>
-        <p class="mt-2 text-gray-600" data-lang-key="successDesc"></p>
-        <a id="download-link" href="#" download="circle-video.webm"
-           class="mt-8 inline-block w-full bg-green-600 text-white font-bold
-                  py-3 px-4 rounded-lg hover:bg-green-700">
-          <span data-lang-key="downloadButton"></span>
-        </a>
-        <button id="reset-button"
-                class="mt-3 w-full text-sm text-gray-600 hover:underline"
-                data-lang-key="resetButton"></button>
-      </div>
-    </div>
-  </main>
-  <footer class="bg-white mt-16 border-t border-gray-200">
-    <div class="container mx-auto py-8 px-4 sm:px-6 lg:px-8
-                text-center text-gray-500">
-      <div class="flex justify-center gap-x-6 mb-4">
-        <a href="/" class="text-sm hover:underline nav-link"
-           data-lang-key="homeLink"></a>
-        <a href="/video-cropper.html"
-           class="text-sm hover:underline nav-link"
-           data-lang-key="videoCropperLink"></a>
-        <a href="/privacy.html" class="text-sm hover:underline nav-link"
-           data-lang-key="privacyLink"></a>
-        <a href="/terms.html" class="text-sm hover:underline nav-link"
-           data-lang-key="termsLink"></a>
-      </div>
-      <p>&copy; <span id="footer-year"></span>
-         <span data-lang-key="siteName"></span>.
-         <span data-lang-key="footerRights"></span></p>
-    </div>
-  </footer>
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-200">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="/" class="text-xl font-bold text-gray-900 nav-link" data-lang-key="siteName">circlecropimage.app</a>
+                </div>
+                <div class="relative">
+                    <button id="lang-switcher-btn" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-label="Change language" aria-haspopup="true" aria-expanded="false">
+                        <span id="current-lang-flag">🇺🇸</span>
+                        <svg class="w-5 h-5 ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div id="lang-switcher-menu" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none hidden transform opacity-0 scale-95 dropdown-menu" role="menu" aria-orientation="vertical" aria-labelledby="lang-switcher-btn">
+                        </div>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-  <script type="module">
-    /* --------- i18n 多语言配置 --------- */
-    const translations = {
-      en:{siteName:"circlecropimage.app",mainTitle:"Circle Video Cropper",mainIntro:"Crop your video into a perfect circle. Ideal for profile videos, animations, and web design. The output is a WebM file with a transparent background.",uploadCTA:"Drag & drop your video, or ",uploadClick:"click to upload",uploadFormats:"Recommended: MP4, MOV. Max size: 25MB",privacyNotice:"Your video is processed entirely in your browser and is never uploaded.",cropButton:"Start Cropping",successTitle:"Success!",successDesc:"Your circular video is ready for download.",downloadButton:"Download Circular Video (.webm)",resetButton:"Crop another video",statusLoading:"Loading FFmpeg Core (~25 MB)...",statusReady:"Ready to Crop!",statusProcessing:"Processing... this may take a while.",errorFileSize:"File is too large. Please select a file under 25MB.",errorFFmpegLoad:"Failed to load the video processor. Please try again.",homeLink:"Image Cropper",videoCropperLink:"Video Cropper",privacyLink:"Privacy Policy",termsLink:"Terms of Service",footerRights:"All rights reserved."},
-      zh:{siteName:"circlecropimage.app",mainTitle:"圆形视频裁剪工具",mainIntro:"将你的视频裁剪成一个完美的圆形。适用于个人主页视频、动画和网页设计。输出文件为带有透明背景的 WebM 格式。",uploadCTA:"拖放你的视频文件，或 ",uploadClick:"点击上传",uploadFormats:"推荐格式：MP4、MOV。最大 25MB",privacyNotice:"你的视频完全在浏览器中处理，绝不会被上传。",cropButton:"开始裁剪",successTitle:"裁剪成功！",successDesc:"你的圆形视频已准备就绪，可以下载了。",downloadButton:"下载圆形视频 (.webm)",resetButton:"裁剪下一个视频",statusLoading:"正在加载 FFmpeg 核心组件 (~25 MB)...",statusReady:"已准备好，可以开始裁剪！",statusProcessing:"处理中... 这可能需要一些时间。",errorFileSize:"文件过大，请选择小于 25MB 的文件。",errorFFmpegLoad:"视频处理器加载失败。请检查网络或更换浏览器。",homeLink:"图片裁剪",videoCropperLink:"视频裁剪",privacyLink:"隐私政策",termsLink:"服务条款",footerRights:"版权所有。"}
-    };
-    const flags = { en:"🇺🇸", zh:"🇨🇳" };
-    const langNames = { en:"English", zh:"中文 (简体)" };
-    let currentLang = 'en';
-
-    function updateNavLinks(lang){
-      document.querySelectorAll('.nav-link').forEach(link=>{
-        let base = link.getAttribute('href').split('?')[0];
-        if(base==='/') base='/index.html';
-        link.setAttribute('href', `${base}?lang=${lang}`);
-      });
-    }
-    function setLanguage(lang='en'){
-      currentLang = translations[lang] ? lang : 'en';
-      const t = translations[currentLang];
-      document.querySelectorAll('[data-lang-key]').forEach(el=>{
-        const k = el.getAttribute('data-lang-key');
-        if(t[k]) el.innerHTML = t[k];
-      });
-      document.documentElement.lang = currentLang;
-      document.getElementById('current-lang-flag').textContent = flags[currentLang];
-      updateNavLinks(currentLang);
-    }
-
-    /* --------- On DOM Ready DOM加载后执行 --------- */
-    document.addEventListener('DOMContentLoaded', () => {
-      // ----------------- 第一步：初始化UI和语言 -----------------
-      const btn = document.getElementById('lang-switcher-btn');
-      const menu = document.getElementById('lang-switcher-menu');
-      menu.innerHTML = Object.keys(flags).map(code=>`
-        <a href="?lang=${code}" class="flex items-center px-4 py-2 text-sm
-                 text-gray-700 hover:bg-gray-100" data-lang="${code}">
-          <span class="mr-3">${flags[code]}</span>${langNames[code]}
-        </a>`).join('');
-      btn.onclick = ()=>{menu.classList.toggle('hidden'); btn.setAttribute('aria-expanded', !menu.classList.contains('hidden'));};
-      document.addEventListener('click',e=>{ if(!btn.contains(e.target)&&!menu.contains(e.target)){ menu.classList.add('hidden'); btn.setAttribute('aria-expanded','false'); } });
-      menu.addEventListener('click',e=>{
-        const a=e.target.closest('a'); if(!a) return;
-        e.preventDefault(); const lang=a.dataset.lang;
-        setLanguage(lang);
-        const url=new URL(location); url.searchParams.set('lang',lang);
-        history.pushState({},'',url); menu.classList.add('hidden');
-      });
-
-      setLanguage(new URLSearchParams(location.search).get('lang') || 'en');
-      document.getElementById('footer-year').textContent = new Date().getFullYear();
-
-      // ----------------- 第二步：获取DOM元素引用 -----------------
-      const $ = id => document.getElementById(id);
-      const status = id => translations[currentLang][id];
-      
-      const dropArea = $('drop-area');
-      const fileInput = $('file-input');
-      const uploadError = $('upload-error');
-      const preview = $('video-preview');
-      const statusMsg = $('status-message');
-      const cropBtn = $('crop-button');
-      const loader = $('loader');
-      const progressBar = $('progress-bar');
-      const progWrap = $('progress-bar-container');
-
-      const MAX = 25 * 1024 * 1024;
-      let file = null;
-      let ffmpeg = null; // 将ffmpeg实例移到这里
-
-      // ----------------- 第三步：立即为UI元素绑定事件 -----------------
-      function handleFile(f) {
-        if (!f) return;
-        if (f.size > MAX) {
-          uploadError.textContent = status('errorFileSize');
-          uploadError.classList.remove('hidden');
-          return;
-        }
-        uploadError.classList.add('hidden');
-        file = f;
-        preview.src = URL.createObjectURL(f);
-        $('upload-step').classList.add('hidden');
-        $('processing-step').classList.remove('hidden');
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         
-        // 如果FFmpeg已加载，更新状态，否则显示加载中
-        if (ffmpeg && ffmpeg.isLoaded()) {
-          statusMsg.textContent = status('statusReady');
-          cropBtn.disabled = false;
-        } else {
-          statusMsg.textContent = status('statusLoading');
-          loader.classList.remove('hidden');
-        }
-      }
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900" data-lang-key="videoMainTitle"></h1>
+            <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600" data-lang-key="videoMainIntro"></p>
+        </div>
 
-      // 立即绑定事件，确保UI即时响应
-      ['dragover', 'dragenter'].forEach(evt => {
-        dropArea.addEventListener(evt, e => {
-          e.preventDefault(); dropArea.classList.add('drag-over');
-        });
-      });
-      ['dragleave', 'drop'].forEach(evt => {
-        dropArea.addEventListener(evt, e => {
-          e.preventDefault(); dropArea.classList.remove('drag-over');
-        });
-      });
-      dropArea.addEventListener('drop', e => handleFile(e.dataTransfer.files[0]));
-      dropArea.addEventListener('click', () => fileInput.click());
-      fileInput.onchange = e => handleFile(e.target.files[0]);
-      
-      $('reset-button').onclick = () => location.reload();
+        <div id="video-tool-section" class="bg-white rounded-2xl shadow-2xl overflow-hidden ring-1 ring-gray-900/5 p-4 sm:p-6 lg:p-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="md:col-span-2">
+                    <div id="video-upload-container" class="text-center">
+                         <div id="video-drop-area" role="button" tabindex="0" aria-label="Video upload area. Drag and drop or click to upload." class="border-2 border-dashed border-gray-300 rounded-xl p-8 md:p-12 cursor-pointer hover:bg-gray-100 transition-colors">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v20.764a1 1 0 01-1.447.894L15 28M25 18v12m4-14v14M33 16v16"/></svg>
+                            <p class="mt-4 text-lg text-gray-600">
+                                <span data-lang-key="uploadVideoCTA"></span>
+                                <span class="font-semibold text-blue-600" data-lang-key="uploadClick"></span>
+                            </p>
+                            <p class="text-sm text-gray-500 mt-1" data-lang-key="uploadVideoFormats"></p>
+                            <input type="file" id="video-file-input" class="hidden" accept="video/mp4,video/webm,video/ogg">
+                        </div>
+                    </div>
 
+                    <div id="video-editor-container" class="hidden">
+                        <div class="canvas-wrapper w-full bg-black rounded-xl overflow-hidden relative mb-4">
+                            <video id="video-player" class="block w-full h-full" muted playsinline loop></video>
+                            <canvas id="video-guide-canvas" class="absolute top-0 left-0 w-full h-full"></canvas>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4">
+                                <label for="diameter-slider" class="text-sm font-medium text-gray-700 w-28" data-lang-key="diameterLabel"></label>
+                                <input type="range" id="diameter-slider" min="100" max="1000" step="2" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" aria-label="Circle diameter control for video cropping">
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-      // ----------------- 第四步：在后台异步加载和初始化FFmpeg -----------------
-      async function initializeFFmpeg() {
-        // 等待 <script> 标签加载完成，确保 window.FFmpeg 可用
-        await new Promise(res => {
-          if (window.FFmpeg) return res();
-          $('ffmpeg-lib').addEventListener('load', res, { once: true });
-        });
-
-        const { createFFmpeg, fetchFile } = window.FFmpeg;
-        ffmpeg = createFFmpeg({
-          log: true,
-          corePath: 'https://unpkg.com/@ffmpeg/core@0.12.4/dist/umd/ffmpeg-core.js',
-          wasmPath: 'https://unpkg.com/@ffmpeg/core@0.12.4/dist/umd/ffmpeg-core.wasm'
-        });
-
-        // 如果用户已选择文件，则显示加载状态
-        if (file) {
-          statusMsg.textContent = status('statusLoading');
-          loader.classList.remove('hidden');
-        }
-
-        try {
-          await ffmpeg.load();
-          // 如果用户已选择文件，加载完成后更新状态
-          if (file) {
-            statusMsg.textContent = status('statusReady');
-            cropBtn.disabled = false;
-            loader.classList.add('hidden');
-          }
-        } catch (e) {
-          console.error(e);
-          statusMsg.textContent = status('errorFFmpegLoad');
-          loader.classList.add('hidden');
-        }
+                <aside class="md:col-span-1">
+                    <div id="video-controls-container" class="text-center hidden">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4" data-lang-key="videoControlsTitle"></h3>
+                        <div class="space-y-4">
+                            <button id="start-rec-btn" class="w-full bg-red-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 transition-all duration-300 transform hover:scale-105" data-lang-key="startRecording"></button>
+                            <button id="stop-rec-btn" class="w-full bg-gray-700 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 transition-all duration-300 transform hover:scale-105 hidden" data-lang-key="stopRecording"></button>
+                            <button id="video-reset-btn" class="mt-3 w-full bg-gray-100 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors" data-lang-key="resetButton" aria-label="Upload a new video"></button>
+                        </div>
+                    </div>
+                     <div id="video-result-container" class="text-center hidden">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4" data-lang-key="downloadTitle"></h3>
+                        <div class="space-y-3">
+                             <a id="download-video-btn" class="block w-full bg-blue-600 text-white text-center font-bold py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-300" data-lang-key="downloadVideo"></a>
+                        </div>
+                         <p id="video-processing-notice" class="text-sm text-gray-500 mt-4 hidden" data-lang-key="processing"></p>
+                        <button id="video-reset-btn-2" class="mt-4 w-full bg-gray-100 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors" data-lang-key="resetButton" aria-label="Upload a new video"></button>
+                    </div>
+                </aside>
+            </div>
+        </div>
         
-        // 为裁剪按钮绑定事件（在ffmpeg初始化后进行）
-        cropBtn.onclick = async () => {
-          if (!file || !ffmpeg || !ffmpeg.isLoaded()) return;
-          
-          cropBtn.disabled = true;
-          loader.classList.remove('hidden');
-          statusMsg.textContent = status('statusProcessing');
-          progWrap.classList.remove('hidden');
 
-          ffmpeg.FS('writeFile', file.name, await fetchFile(file));
-          ffmpeg.setProgress(({ ratio }) => {
-            progressBar.style.width = `${Math.round(ratio * 100)}%`;
-          });
+        <div class="max-w-4xl mx-auto">
+            <section class="py-16 sm:py-24">
+                <h2 class="text-3xl font-bold text-center text-gray-900 mb-10" data-lang-key="howToTitle"></h2>
+                <div class="space-y-8 md:space-y-0 md:grid md:grid-cols-3 md:gap-x-8 md:gap-y-10 text-center">
+                    <div>
+                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-500 text-white font-bold text-xl mx-auto">1</div>
+                        <h3 class="mt-4 text-lg font-semibold" data-lang-key="step1Title"></h3>
+                        <p class="mt-2 text-base text-gray-600" data-lang-key="step1Desc"></p>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-500 text-white font-bold text-xl mx-auto">2</div>
+                        <h3 class="mt-4 text-lg font-semibold" data-lang-key="step2Title"></h3>
+                        <p class="mt-2 text-base text-gray-600" data-lang-key="step2Desc"></p>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-500 text-white font-bold text-xl mx-auto">3</div>
+                        <h3 class="mt-4 text-lg font-semibold" data-lang-key="step3Title"></h3>
+                        <p class="mt-2 text-base text-gray-600" data-lang-key="step3Desc"></p>
+                    </div>
+                </div>
+            </section>
+            <section id="other-tools" class="py-16 sm:py-24">
+                <h2 class="text-3xl font-bold text-center text-gray-900" data-lang-key="otherToolsTitle"></h2>
+                <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <a href="index.html" class="block bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                        <h3 class="text-lg font-semibold" data-lang-key="tool1Title"></h3>
+                        <p class="mt-2 text-base text-gray-600" data-lang-key="tool1Desc"></p>
+                    </a>
+                    
+                    
+                </div>
+            </section>
 
-          const tmpVid = document.createElement('video');
-          tmpVid.src = URL.createObjectURL(file);
-          await new Promise(res => tmpVid.onloadedmetadata = res);
-          const size = Math.min(tmpVid.videoWidth, tmpVid.videoHeight);
-          const x = (tmpVid.videoWidth - size) / 2;
-          const y = (tmpVid.videoHeight - size) / 2;
+            <section class="py-16 sm:py-24 bg-gray-100 rounded-2xl px-6">
+                <h2 class="text-3xl font-bold text-center text-gray-900" data-lang-key="useCasesTitle"></h2>
+                <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-10">
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-lg font-semibold" data-lang-key="useCase1Title"></h3>
+                        <p class="mt-2 text-base text-gray-600" data-lang-key="useCase1Desc"></p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-lg font-semibold" data-lang-key="useCase2Title"></h3>
+                        <p class="mt-2 text-base text-gray-600" data-lang-key="useCase2Desc"></p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-lg font-semibold" data-lang-key="useCase3Title"></h3>
+                        <p class="mt-2 text-base text-gray-600" data-lang-key="useCase3Desc"></p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-lg font-semibold" data-lang-key="useCase4Title"></h3>
+                        <p class="mt-2 text-base text-gray-600" data-lang-key="useCase4Desc"></p>
+                    </div>
+                </div>
+            </section>
 
-          await ffmpeg.run(
-            '-i', file.name,
-            '-vf', `crop=${size}:${size}:${x}:${y},format=yuva420p,geq=a='if(lt(pow(X-W/2,2)+pow(Y-H/2,2),pow(W/2,2)),255,0)'`,
-            '-c:v', 'libvpx-vp9', '-an', 'output.webm'
-          );
-          const data = ffmpeg.FS('readFile', 'output.webm');
-          const url = URL.createObjectURL(new Blob([data.buffer], { type: 'video/webm' }));
+            <section class="py-16 sm:py-24">
+                <h2 class="text-3xl font-bold text-center text-gray-900" data-lang-key="featuresTitle"></h2>
+                <ul class="mt-12 space-y-4 max-w-2xl mx-auto feature-list text-lg">
+                    <li data-lang-key="feature1"></li>
+                    <li data-lang-key="feature2"></li>
+                    <li data-lang-key="feature3"></li>
+                    <li data-lang-key="feature4"></li>
+                    <li data-lang-key="feature5"></li>
+                </ul>
+            </section>
 
-          $('download-link').href = url;
-          $('processing-step').classList.add('hidden');
-          $('download-step').classList.remove('hidden');
-        };
-      }
+            <section id="faq" class="py-16 sm:py-24 bg-gray-100 rounded-2xl px-6">
+                <h2 class="text-3xl font-bold text-center text-gray-900" data-lang-key="faqTitle"></h2>
+                <div class="mt-12 max-w-3xl mx-auto space-y-8">
+                    <div>
+                        <h3 class="text-lg font-semibold" data-lang-key="faq1q"></h3>
+                        <p class="mt-2 text-base text-gray-600" data-lang-key="faq1a"></p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold" data-lang-key="faq2q"></h3>
+                        <p class="mt-2 text-base text-gray-600" data-lang-key="faq2a"></p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold" data-lang-key="faq3q"></h3>
+                        <p class="mt-2 text-base text-gray-600" data-lang-key="faq3a"></p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold" data-lang-key="faq4q"></h3>
+                        <p class="mt-2 text-base text-gray-600" data-lang-key="faq4a"></p>
+                    </div>
+                </div>
+            </section>
 
-      // 立即开始在后台加载FFmpeg
-      initializeFFmpeg();
-    });
-  </script>
+            
+        </div>
+    </main>
+
+    <footer class="bg-white mt-16 border-t border-gray-200">
+        <div class="container mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center text-gray-500">
+             <div class="flex justify-center gap-x-6 mb-4">
+                <a href="privacy.html" class="text-sm hover:underline nav-link" data-lang-key="privacyPolicy"></a>
+                <a href="terms.html" class="text-sm hover:underline nav-link" data-lang-key="termsOfService"></a>
+                <a href="mailto:privacy@circlecropimage.app" class="text-sm hover:underline nav-link" data-lang-key="contactUs"></a>
+            </div>
+            <p>&copy; <span id="footer-year"></span> <span data-lang-key="siteName"></span>. <span data-lang-key="footerRights"></span></p>
+        </div>
+    </footer>
+
+    <script defer src="videocropper.js"></script>
 </body>
 </html>
