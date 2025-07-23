@@ -3,16 +3,11 @@
   "version": "1.0.0",
   "description": "Circle crop image tool",
   "scripts": {
-    "dev": "npm run build:css:watch",
-    "build": "npm run build:prod",
-    "build:prod": "npm run build:css:prod && npm run minify:js && npm run optimize:html && npm run validate",
-    "build:css:watch": "tailwindcss -i ./src/input.css -o ./dist/styles.css --watch",
-    "build:css:prod": "mkdir -p dist && tailwindcss -i ./src/input.css -o ./dist/styles.css --minify",
-    "minify:js": "mkdir -p dist && terser videocropper.js -o dist/videocropper.min.js --compress --mangle || echo 'JS minification skipped'",
-    "optimize:html": "node scripts/optimize-html.js",
-    "validate": "node scripts/validate-build.js",
-    "preview": "npx serve .",
-    "cf:build": "npm run build:prod"
+    "build:css": "tailwindcss -i ./src/input.css -o ./dist/styles.css --minify",
+    "build:js": "terser videocropper.js -o dist/videocropper.min.js --compress --mangle || echo 'JS minify skipped'",
+    "build:html": "node scripts/optimize-html.js",
+    "cf:build": "mkdir -p dist && npm run build:css && npm run build:js && npm run build:html",
+    "dev": "tailwindcss -i ./src/input.css -o ./dist/styles.css --watch"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.0",
