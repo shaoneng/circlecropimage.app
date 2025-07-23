@@ -14,9 +14,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <script src="https://cdn.tailwindcss.com"></script>
+    
 
     <style>body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif}.dropdown-menu{transition:opacity .2s ease-out,transform .2s ease-out}</style>
+
+    <!-- Critical CSS -->
+    
+    
+    <!-- Preload full CSS -->
+    <link rel="preload" href="./dist/styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="./dist/styles.css"></noscript>
+    
+    <!-- Preload JS -->
+    <link rel="preload" href="./dist/videocropper.min.js" as="script">
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased">
 
@@ -115,6 +125,26 @@
         function updateNavLinks(e){document.querySelectorAll(".nav-link").forEach(t=>{const n=t.getAttribute("href").split("?")[0],o="/index.html"===n||"/"===n?"/":n;t.setAttribute("href",`${o}?lang=${e}`)})}
         function setLanguage(e){const t=translations[e]?e:"en",n=translations[t]||translations.en;document.querySelectorAll("[data-lang-key]").forEach(e=>{const t=e.getAttribute("data-lang-key");n[t]?e.innerHTML=n[t]:e.innerHTML=""});const o=document.querySelector("h1[data-lang-key='title']");o&&(document.title=o.textContent+" | circlecropimage.app"),document.documentElement.lang=t;const a=document.getElementById("current-lang-flag");a&&(a.textContent=flags[t]);const i=document.getElementById("lang-switcher-menu");i&&i.classList.add("hidden","opacity-0","scale-95"),updateNavLinks(t)}
         document.addEventListener('DOMContentLoaded',function(){const e=document.getElementById("lang-switcher-btn"),t=document.getElementById("lang-switcher-menu");let n="<div class='py-1' role='menu' aria-orientation='vertical' aria-labelledby='lang-switcher-btn'>";for(const o in flags)n+=`<a href="?lang=${o}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" data-lang="${o}"><span class="mr-3">${flags[o]}</span> ${langNames[o]}</a>`;n+="</div>",t.innerHTML=n,e.addEventListener("click",()=>{t.classList.toggle("hidden"),setTimeout(()=>{t.classList.toggle("opacity-0"),t.classList.toggle("scale-95")},10),e.setAttribute("aria-expanded",!t.classList.contains("hidden"))}),document.addEventListener("click",n=>{!e.contains(n.target)&&!t.contains(n.target)&&(t.classList.add("hidden","opacity-0","scale-95"),e.setAttribute("aria-expanded","false"))}),t.addEventListener("click",e=>{e.preventDefault();const n=e.target.closest("a");if(n&&n.dataset.lang){const e=n.dataset.lang;setLanguage(e);try{const t=new URL(window.location);t.searchParams.set("lang",e),window.history.pushState({},"",t)}catch(e){console.warn("Could not update URL with pushState.",e)}}});const o=new URLSearchParams(window.location.search),a=o.get("lang")||"en";setLanguage(a),document.getElementById("footer-year").textContent=(new Date).getFullYear()});
+    </script>
+
+    <script>
+        // 异步加载完整 CSS（备用方案）
+        if (!document.querySelector('link[href="./dist/styles.css"]')) {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = './dist/styles.css';
+            document.head.appendChild(link);
+        }
+        
+        // 预连接到重要域名
+        const preconnects = ['https://fonts.googleapis.com', 'https://fonts.gstatic.com'];
+        preconnects.forEach(url => {
+            const link = document.createElement('link');
+            link.rel = 'preconnect';
+            link.href = url;
+            if (url.includes('gstatic')) link.crossOrigin = 'anonymous';
+            document.head.appendChild(link);
+        });
     </script>
 </body>
 </html>

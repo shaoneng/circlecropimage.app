@@ -1,0 +1,26 @@
+{
+  "name": "circlecropimage-app",
+  "version": "1.0.0",
+  "description": "Circle crop image tool",
+  "scripts": {
+    "dev": "npm run build:css:watch",
+    "build": "npm run build:prod",
+    "build:prod": "npm run build:css:prod && npm run minify:js && npm run optimize:html && npm run validate",
+    "build:css:watch": "tailwindcss -i ./src/input.css -o ./dist/styles.css --watch",
+    "build:css:prod": "mkdir -p dist && tailwindcss -i ./src/input.css -o ./dist/styles.css --minify",
+    "minify:js": "mkdir -p dist && terser videocropper.js -o dist/videocropper.min.js --compress --mangle || echo 'JS minification skipped'",
+    "optimize:html": "node scripts/optimize-html.js",
+    "validate": "node scripts/validate-build.js",
+    "preview": "npx serve .",
+    "cf:build": "npm run build:prod"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "terser": "^5.24.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

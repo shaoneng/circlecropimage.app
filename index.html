@@ -82,11 +82,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <script src="https://cdn.tailwindcss.com"></script>
     
-    <style>
-        html{scroll-behavior:smooth}body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'}.dropdown-menu{transition:opacity .2s ease-out,transform .2s ease-out}.drag-over{border-color:#2563eb;background-color:#eff6ff}input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;background:#2563eb;cursor:pointer;border-radius:50%}input[type=range]::-moz-range-thumb{width:20px;height:20px;background:#2563eb;cursor:pointer;border-radius:50%}.feature-list li{position:relative;padding-left:1.75rem}.feature-list li::before{content:'✓';position:absolute;left:0;color:#2563eb;font-weight:600}
-    </style>
+    
+    
+
+    <!-- Critical CSS -->
+    
+    
+    <!-- Preload full CSS -->
+    <link rel="preload" href="./dist/styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="./dist/styles.css"></noscript>
+    
+    <!-- Preload JS -->
+    <link rel="preload" href="./dist/videocropper.min.js" as="script">
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased">
 
@@ -281,6 +289,26 @@
         function updateNavLinks(e){document.querySelectorAll(".nav-link").forEach(t=>{const n=t.getAttribute("href").split("?")[0],o="/index.html"===n||"/"===n?"/":n;t.setAttribute("href",`${o}?lang=${e}`)})}
         function setLanguage(e){const t=translations[e]?e:"en",n=translations[t]||translations.en;document.querySelectorAll("[data-lang-key]").forEach(e=>{const t=e.getAttribute("data-lang-key");n[t]&&(e.innerHTML=n[t])}),document.title=n.pageTitle,document.querySelector('meta[name="description"]').setAttribute("content",n.metaDescription),document.documentElement.lang=t;const o=document.getElementById("current-lang-flag");o&&(o.textContent=flags[t]);const a=document.getElementById("lang-switcher-menu");a&&a.classList.add("hidden","opacity-0","scale-95"),updateNavLinks(t)}
         document.addEventListener("DOMContentLoaded",function(){const e=document.getElementById("lang-switcher-btn"),t=document.getElementById("lang-switcher-menu");let n="<div class='py-1' role='menu' aria-orientation='vertical' aria-labelledby='options-menu'>";const o={en:"English",es:"Español",pt:"Português",ru:"Русский",de:"Deutsch",fr:"Français",ja:"日本語",ko:"한국어",zh:"中文 (简体)"};for(const a in flags)n+=`<a href="?lang=${a}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" data-lang="${a}"><span class="mr-3">${flags[a]}</span> ${o[a]}</a>`;n+="</div>",t.innerHTML=n,e.addEventListener("click",()=>{t.classList.toggle("hidden"),setTimeout(()=>{t.classList.toggle("opacity-0"),t.classList.toggle("scale-95")},10),e.setAttribute("aria-expanded",!t.classList.contains("hidden"))}),document.addEventListener("click",n=>{!e.contains(n.target)&&!t.contains(n.target)&&(t.classList.add("hidden","opacity-0","scale-95"),e.setAttribute("aria-expanded","false"))}),t.addEventListener("click",e=>{e.preventDefault();const n=e.target.closest("a");if(n&&n.dataset.lang){const e=n.dataset.lang;setLanguage(e);try{const t=new URL(window.location);t.searchParams.set("lang",e),window.history.pushState({},"",t)}catch(e){console.warn("Could not update URL with pushState.",e)}}});const a=new URLSearchParams(window.location.search),l=a.get("lang")||"en";setLanguage(l),document.getElementById("footer-year").textContent=(new Date).getFullYear();const s=document.getElementById("drop-area"),c=document.getElementById("file-input"),r=document.getElementById("canvas"),u=r.getContext("2d"),g=document.getElementById("preview-canvas"),m=g.getContext("2d"),p=document.getElementById("zoom-slider"),h=document.getElementById("download-btn"),f=document.getElementById("reset-btn"),v=document.getElementById("upload-container"),w=document.getElementById("editor-container"),y=document.getElementById("result-container");let E=null,L=1,b={x:0,y:0},I=!1,C={x:0,y:0},D=0;function x(e){const t=e.target.files[0];t&&t.type.startsWith("image/")&&k(t)}function k(e){const t=new FileReader;t.onload=e=>{E=new Image,E.onload=()=>{S(),T()},E.src=e.target.result},t.readAsDataURL(e)}function S(){v.classList.add("hidden"),w.classList.remove("hidden"),y.classList.remove("hidden");const e=r.parentElement,t=e.clientWidth;r.width=t,r.height=t,D=t/2;const n=E.width/E.height,o=r.width/r.height;L=n>o?r.width/E.width:r.height/E.height,p.value=L,p.min=.5*L,p.max=4*L,b.x=(r.width-E.width*L)/2,b.y=(r.height-E.height*L)/2,T()}function T(){E&&(u.clearRect(0,0,r.width,r.height),u.save(),u.drawImage(E,b.x,b.y,E.width*L,E.height*L),u.restore(),u.save(),u.fillStyle="rgba(0, 0, 0, 0.5)",u.beginPath(),u.rect(0,0,r.width,r.height),u.arc(r.width/2,r.height/2,D,0,2*Math.PI,!0),u.fill(),u.restore(),u.save(),u.strokeStyle="rgba(255, 255, 255, 0.8)",u.lineWidth=2,u.beginPath(),u.arc(r.width/2,r.height/2,D,0,2*Math.PI),u.stroke(),u.restore(),_())}function _(){if(!E)return;m.clearRect(0,0,g.width,g.height);const e=2*D/L,t=-b.x/L,n=-b.y/L;m.save(),m.beginPath(),m.arc(g.width/2,g.height/2,g.width/2,0,2*Math.PI),m.clip(),m.drawImage(E,t,n,e,e,0,0,g.width,g.height),m.restore()}function A(e){const t=parseFloat(e.target.value),n=L,o=r.width/2,a=r.height/2;b.x=o-(o-b.x)*t/n,b.y=a-(a-b.y)*t/n,L=t,T()}function P(e){e.preventDefault(),I=!0,r.classList.remove("cursor-grab"),r.classList.add("cursor-grabbing"),C=H(e)}function U(e){if(!I)return;e.preventDefault();const t=H(e);b.x+=t.x-C.x,b.y+=t.y-C.y,C=t,T()}function q(){I=!1,r.classList.remove("cursor-grabbing"),r.classList.add("cursor-grab")}function H(e){const t=r.getBoundingClientRect(),n=e.clientX||e.touches[0].clientX,o=e.clientY||e.touches[0].clientY;return{x:n-t.left,y:o-t.top}}function O(){if(!E)return;const e=document.createElement("canvas"),t=e.getContext("2d"),n=Math.min(E.width,E.height,4096);e.width=n,e.height=n;const o=2*D/L,a=-b.x/L,i=-b.y/L;t.save(),t.beginPath(),t.arc(n/2,n/2,n/2,0,2*Math.PI),t.clip(),t.drawImage(E,a,i,o,o,0,0,n,n),t.restore();const d=document.createElement("a");d.download=`circle-crop-${Date.now()}.png`,d.href=e.toDataURL("image/png"),d.click()}function j(){E=null,L=1,b={x:0,y:0},c.value="",w.classList.add("hidden"),y.classList.add("hidden"),v.classList.remove("hidden")}s.addEventListener("click",()=>c.click()),s.addEventListener("keydown",e=>{"Enter"!==e.key&&" "!==e.key||c.click()}),c.addEventListener("change",x),s.addEventListener("dragover",(e=>{e.preventDefault(),e.stopPropagation(),s.classList.add("drag-over")})),s.addEventListener("dragleave",(e=>{e.preventDefault(),e.stopPropagation(),s.classList.remove("drag-over")})),s.addEventListener("drop",(e=>{e.preventDefault(),e.stopPropagation(),s.classList.remove("drag-over");const t=e.dataTransfer.files[0];t&&t.type.startsWith("image/")&&k(t)})),p.addEventListener("input",A),h.addEventListener("click",O),f.addEventListener("click",j),r.addEventListener("mousedown",P),r.addEventListener("touchstart",P,{passive:!1}),r.addEventListener("mousemove",U),r.addEventListener("touchmove",U,{passive:!1}),r.addEventListener("mouseup",q),r.addEventListener("touchend",q),r.addEventListener("mouseleave",q)});
+    </script>
+
+    <script>
+        // 异步加载完整 CSS（备用方案）
+        if (!document.querySelector('link[href="./dist/styles.css"]')) {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = './dist/styles.css';
+            document.head.appendChild(link);
+        }
+        
+        // 预连接到重要域名
+        const preconnects = ['https://fonts.googleapis.com', 'https://fonts.gstatic.com'];
+        preconnects.forEach(url => {
+            const link = document.createElement('link');
+            link.rel = 'preconnect';
+            link.href = url;
+            if (url.includes('gstatic')) link.crossOrigin = 'anonymous';
+            document.head.appendChild(link);
+        });
     </script>
 </body>
 </html>
