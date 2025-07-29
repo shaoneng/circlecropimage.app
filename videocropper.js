@@ -54,8 +54,8 @@ document.addEventListener("DOMContentLoaded", function() {
             termsOfService: "Terms of Service",
             contactUs: "Contact Us",
             footerRights: "All rights reserved.",
-            AIimagecaptionTitle: "🇺🇸 AI Image Caption",
-            AIimagecaptionDesc: "🇺🇸 Add context to your images with our AI image caption tool. Generate captions for your photos, videos, and more.",
+            AIimagecaptionTitle: "AI Image Caption",
+            AIimagecaptionDesc: "Add context to your images with our AI image caption tool. Generate captions for your photos, videos, and more."
         },
         es: {
             pageTitle: "Herramienta de Recorte de Vídeo en Círculo - Recortador de Vídeo Redondo Gratis",
@@ -111,8 +111,8 @@ document.addEventListener("DOMContentLoaded", function() {
             termsOfService: "Términos de Servicio",
             contactUs: "Contáctanos",
             footerRights: "Todos los derechos reservados.",
-            AIimagecaptionTitle: "🇺🇸 AI Image Caption",
-            AIimagecaptionDesc: "🇺🇸 Add context to your images with our AI image caption tool. Generate captions for your photos, videos, and more.",
+            AIimagecaptionTitle: " Subtítulos de imagen IA",
+            AIimagecaptionDesc: "Añade contexto a tus imágenes con nuestra herramienta de subtítulos impulsada por IA. Genera subtítulos para tus fotos, vídeos y mucho más."
         },
         pt: {
             pageTitle: "Ferramenta de Corte de Vídeo em Círculo - Cortador de Vídeo Redondo Online Grátis",
@@ -168,8 +168,8 @@ document.addEventListener("DOMContentLoaded", function() {
             termsOfService: "Termos de Serviço",
             contactUs: "Contato",
             footerRights: "Todos os direitos reservados.",
-            AIimagecaptionTitle: "🇧🇷 Legenda de Imagem com IA",
-            AIimagecaptionDesc: "🇧🇷 Adicione contexto às suas imagens com nossa ferramenta de legendas por IA. Gere legendas para suas fotos, vídeos e muito mais.",
+            AIimagecaptionTitle: "Legenda de Imagem com IA",
+            AIimagecaptionDesc: "Adicione contexto às suas imagens com nossa ferramenta de legendas por IA. Gere legendas para suas fotos, vídeos e muito mais."
         },
         ru: {
             pageTitle: "Инструмент для обрезки видео в круг - Бесплатный онлайн-инструмент для круглой обрезки видео",
@@ -225,8 +225,8 @@ document.addEventListener("DOMContentLoaded", function() {
             termsOfService: "Условия использования",
             contactUs: "Связаться с нами",
             footerRights: "Все права защищены.",
-            AIimagecaptionTitle: "🇷🇺 ИИ-подпись к изображению",
-            AIimagecaptionDesc: "🇷🇺 Добавьте контекст к своим изображениям с помощью нашего инструмента ИИ-подписей. Генерируйте подписи к фотографиям, видео и многому другому.",
+            AIimagecaptionTitle: "ИИ-подпись к изображению",
+            AIimagecaptionDesc: "Добавьте контекст к своим изображениям с помощью нашего инструмента ИИ-подписей. Генерируйте подписи к фотографиям, видео и многому другому."
         },
         de: {
             pageTitle: "Video-Kreisausschnitt-Werkzeug - Kostenloser Online-Video-Cropper für runde Videos",
@@ -282,8 +282,8 @@ document.addEventListener("DOMContentLoaded", function() {
             termsOfService: "Nutzungsbedingungen",
             contactUs: "Kontakt",
             footerRights: "Alle Rechte vorbehalten.",
-            AIimagecaptionTitle: "🇩🇪 KI-Bildunterschrift",
-            AIimagecaptionDesc: "🇩🇪 Verleihen Sie Ihren Bildern Kontext mit unserem KI-Bildunterschriften-Tool. Erstellen Sie Beschriftungen für Ihre Fotos, Videos und mehr.",
+            AIimagecaptionTitle: "KI-Bildunterschrift",
+            AIimagecaptionDesc: "Verleihen Sie Ihren Bildern Kontext mit unserem KI-Bildunterschriften-Tool. Erstellen Sie Beschriftungen für Ihre Fotos, Videos und mehr."
         },
         fr: {
             pageTitle: "Outil de Rognage Vidéo en Cercle - Rogneur de Vidéo Rond en Ligne Gratuit",
@@ -339,8 +339,8 @@ document.addEventListener("DOMContentLoaded", function() {
             termsOfService: "Conditions d'Utilisation",
             contactUs: "Contactez-nous",
             footerRights: "Tous droits réservés.",
-            AIimagecaptionTitle: "🇫🇷 Légende d’image IA",
-            AIimagecaptionDesc: "🇫🇷 Ajoutez du contexte à vos images grâce à notre outil de légendes IA. Générez des légendes pour vos photos, vidéos et plus encore.",
+            AIimagecaptionTitle: "Légende d’image IA",
+            AIimagecaptionDesc: "Ajoutez du contexte à vos images grâce à notre outil de légendes IA. Générez des légendes pour vos photos, vidéos et plus encore."
         },
         ja: {
             pageTitle: "円形ビデオ切り抜きツール - 無料オンライン円形ビデオクロッパー",
@@ -396,8 +396,8 @@ document.addEventListener("DOMContentLoaded", function() {
             termsOfService: "利用規約",
             contactUs: "お問い合わせ",
             footerRights: "無断複写・転載を禁じます。",
-            AIimagecaptionTitle: "🇯🇵 AI画像キャプション",
-            AIimagecaptionDesc: "🇯🇵 AI画像キャプションツールで画像に文脈を追加しましょう。写真や動画などのキャプションを生成します。",
+            AIimagecaptionTitle: "AI画像キャプション",
+            AIimagecaptionDesc: "AI画像キャプションツールで画像に文脈を追加しましょう。写真や動画などのキャプションを生成します。"
         },
         ko: {
             pageTitle: "원형 비디오 자르기 도구 - 무료 온라인 원형 비디오 크로퍼",
@@ -453,8 +453,8 @@ document.addEventListener("DOMContentLoaded", function() {
             termsOfService: "서비스 이용약관",
             contactUs: "문의하기",
             footerRights: "모든 권리 보유.",
-            AIimagecaptionTitle: "🇰🇷 AI 이미지 캡션",
-            AIimagecaptionDesc: "🇰🇷 AI 이미지 캡션 도구로 이미지에 컨텍스트를 추가하세요. 사진, 동영상 등 다양한 매체의 캡션을 생성합니다.",
+            AIimagecaptionTitle: "AI 이미지 캡션",
+            AIimagecaptionDesc: "AI 이미지 캡션 도구로 이미지에 컨텍스트를 추가하세요. 사진, 동영상 등 다양한 매체의 캡션을 생성합니다."
         },
         zh: {
             pageTitle: "圆形视频裁剪工具 - 免费在线圆形视频裁剪器",
@@ -510,8 +510,8 @@ document.addEventListener("DOMContentLoaded", function() {
             termsOfService: "服务条款",
             contactUs: "联系我们",
             footerRights: "版权所有。",
-            AIimagecaptionTitle: "🇨🇳 AI 图像标题",
-            AIimagecaptionDesc: "🇨🇳 使用我们的 AI 图像标题工具，为您的图像添加上下文。为照片、视频等生成标题。",
+            AIimagecaptionTitle: "AI 图像标题",
+            AIimagecaptionDesc: "使用我们的 AI 图像标题工具，为您的图像添加上下文。为照片、视频等生成标题。"
         }
     };
     const flags = { en: '🇺🇸', es: '🇪🇸', pt: '🇧🇷', ru: '🇷🇺', de: '🇩🇪', fr: '🇫🇷', ja: '🇯🇵', ko: '🇰🇷', zh: '🇨🇳' };
